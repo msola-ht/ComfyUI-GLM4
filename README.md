@@ -2,8 +2,7 @@
 
 ------
 
-![ComfyUI-GLM4 Workflow Example 1](image/PixPin_2025-06-19_18-19-13.png)
-![ComfyUI-GLM4 Workflow Example 2](image/PixPin_2025-06-19_18-19-21.png)
+![ComfyUI-GLM4](/image/PixPin_2025-06-19_18-32-38.png)
 
 ## 简介
 
