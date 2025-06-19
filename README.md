@@ -31,7 +31,7 @@
 
 ### 步骤二：获取智谱AI API Key
 
-1.  **访问智谱AI开放平台**：打开链接 [https://www.bigmodel.cn/invite?icode=2X%2FldpUyTOnXZGJ6GSyycbC%2Fk7jQAKmT1mpEiZXXnFw%3D](https://www.bigmodel.cn/invite?icode=2X%2FldpUyTOnXZGJ6GSyycbC%2Fk7jQAKmT1mpEiZXXnFw%3D)。
+1.  **访问智谱AI开放平台**：[bigmodel.cn](https://www.bigmodel.cn/invite?icode=2X%2FldpUyTOnXZGJ6GSyycbC%2Fk7jQAKmT1mpEiZXXnFw%3D)。
 2.  **注册/登录**：完成注册并登录您的账号。
 3.  **生成 API Key**：在用户中心或 API Key 管理页面生成您的 API Key。**请妥善保管此Key。**
 
