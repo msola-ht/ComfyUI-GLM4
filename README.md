@@ -1,2 +1,3 @@
 # ComfyUI-GLM4
- 
+
+填入YOUR_ZHIPU_AI_API_KEY_HERE，立即可用
