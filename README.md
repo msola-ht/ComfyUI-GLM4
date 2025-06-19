@@ -1,87 +1,74 @@
-# ComfyUI-GLM4
+# ComfyUI-GLM4 极简使用指南
 
 ------
 
+**ComfyUI-GLM4** 是一个 ComfyUI 自定义节点，让您可以在 ComfyUI 中直接使用智谱AI的 **GLM-4 大语言模型**，为您的图像生成或自动化流程提供智能文本支持。
+
 ![ComfyUI-GLM4](/image/PixPin_2025-06-19_18-32-38.png)
 
-## 简介
+## 核心功能
 
-**ComfyUI-GLM4** 是一个为 [ComfyUI](https://github.com/comfyanonymous/ComfyUI) 设计的自定义节点，旨在将智谱AI的 [GLM-4 大语言模型](https://open.bigmodel.cn/modelcenter/glm-4) 无缝集成到您的 ComfyUI 工作流中。通过这个节点，您可以直接在 ComfyUI 中利用 GLM-4 强大的文本生成、理解、摘要和推理能力，为您的图像生成、自动化流程等提供智能文本支持。
+*   **ComfyUI 内置 GLM-4：** 直接在 ComfyUI 工作流中调用 GLM-4 模型。
+*   **智能文本生成：** 视频提示词扩写，反推提示词
+*   **简单易用：** 只需填入智谱AI API Key 即可开始。
 
-## 主要特性
+## 快速上手（三步走）
 
-*   **简单易用：** 仅需填入您的智谱AI API Key，即可立即开始使用。
-*   **深度集成：** 作为 ComfyUI 的原生节点，可与其他节点无缝连接，构建复杂的AI工作流。
-*   **强大能力：** 利用 GLM-4 模型提供的高质量文本生成和处理能力。
-*   **灵活配置：** 支持配置 GLM-4 的温度（Temperature）、最大生成长度（Max Tokens）等参数，以满足不同需求。
+### 步骤一：安装节点与依赖
 
-## 安装
-
-1.  **克隆仓库：**
-    打开您的 ComfyUI 安装目录下的 `custom_nodes` 文件夹，然后执行以下命令克隆本仓库：
+1.  **打开 ComfyUI 安装目录**：进入 `ComfyUI/custom_nodes` 文件夹。
+2.  **克隆仓库**：在此文件夹内打开命令行（或Git Bash），运行以下命令：
     ```bash
-    cd path/to/ComfyUI/custom_nodes
     git clone https://github.com/msola-ht/ComfyUI-GLM4.git
     ```
-
-2.  **安装依赖 (如果需要):**
-    本节点可能依赖于智谱AI的 Python SDK。请确保您的 Python 环境中已安装必要的库。通常，您可以在 `ComfyUI-GLM4` 目录下找到 `requirements.txt` 文件，并安装：
+3.  **安装依赖**：进入新克隆的 `ComfyUI-GLM4` 文件夹，运行以下命令安装必要的Python库：
     ```bash
     cd ComfyUI-GLM4
     pip install -r requirements.txt
     ```
-    *(如果 `requirements.txt` 不存在，通常意味着核心依赖已包含在 ComfyUI 环境中，或者只需安装 `zhipuai` 库：`pip install zhipuai`)*
+    *(如果 `requirements.txt` 不存在，请尝试运行 `pip install zhipuai`)*
+4.  **重启 ComfyUI**：安装完成后，**务必重启 ComfyUI 应用程序**。
 
-3.  **重启 ComfyUI：**
-    安装完成后，请重启您的 ComfyUI 应用程序，新的节点将会出现在节点列表中。
+### 步骤二：获取智谱AI API Key
 
-## 使用方法
+1.  **访问智谱AI开放平台**：打开链接 [https://www.bigmodel.cn/invite?icode=2X%2FldpUyTOnXZGJ6GSyycbC%2Fk7jQAKmT1mpEiZXXnFw%3D](https://www.bigmodel.cn/invite?icode=2X%2FldpUyTOnXZGJ6GSyycbC%2Fk7jQAKmT1mpEiZXXnFw%3D)。
+2.  **注册/登录**：完成注册并登录您的账号。
+3.  **生成 API Key**：在用户中心或 API Key 管理页面生成您的 API Key。**请妥善保管此Key。**
 
-1.  **获取智谱AI API Key：**
-    *   访问 [智谱AI开放平台](https://open.bigmodel.cn/)。
-    *   注册并登录您的账号。
-    *   在用户中心或 API Key 管理页面生成您的 API Key。请妥善保管您的 Key。
+### 步骤三：在 ComfyUI 中使用
 
-2.  **在 ComfyUI 中添加 ComfyUI-GLM4 节点：**
+1.  **拖出节点**：
     *   启动 ComfyUI。
-    *   在工作流中右键点击，选择 `Add Node` -> `ComfyUI-GLM4` (或类似名称)。
+    *   在工作流画布中**右键点击**，选择 `Add Node` -> `ComfyUI-GLM4` (或类似名称)。
+2.  **配置 API Key**：
+    *   在 ComfyUI-GLM4 节点上，找到 `api_key` 输入框。
+    *   将您在智谱AI平台获取到的 API Key 粘贴到此框中（替换 `YOUR_ZHIPU_AI_API_KEY_HERE`）。
+3.  **连接并运行**：
+    *   将您的文本输入（Prompt）连接到 `text_input` 端。
+    *   将节点的 `text_output` 端连接到需要接收文本的节点（例如：`CLIP Text Encode` 用于图像生成，或 `Text` 节点用于显示结果）。
+    *   点击 ComfyUI 的 `Queue Prompt` 按钮，即可看到 GLM-4 生成的文本。
 
-3.  **配置 API Key：**
-    *   在 ComfyUI-GLM4 节点中，找到名为 `api_key` 的输入框。
-    *   将您在智谱AI平台获取到的 API Key 粘贴到此输入框中（替换 `YOUR_ZHIPU_AI_API_KEY_HERE`）。
+### **重要提示：免费模型选择**
 
-4.  **连接节点并构建工作流：**
-    *   **输入：** 将您的 Prompt（文本输入）连接到 ComfyUI-GLM4 节点的输入端（通常标记为 `text_input` 或 `prompt`）。
-    *   **输出：** ComfyUI-GLM4 节点的输出端（通常标记为 `text_output` 或 `generated_text`）将输出 GLM-4 模型生成的文本。您可以将此输出连接到：
-        *   一个 `Text` 节点或 `Print Text` 节点以显示结果。
-        *   一个 `CLIP Text Encode` 节点，将生成的文本作为图像生成模型的 Prompt。
-        *   其他任何需要文本输入的 ComfyUI 节点。
+在 `ComfyUI-GLM4` 节点的 `model_name` 参数中，您可以选择不同的 GLM 模型。为了**免费使用**，请优先选择以下模型：
 
-5.  **运行工作流：**
-    *   配置好所有连接后，点击 ComfyUI 的 `Queue Prompt` 按钮，GLM-4 模型将开始处理您的请求并生成文本。
+*   **`GLM-4-Flash`** (或其最新版本如 `GLM-4-Flash-250414`)
+*   **`GLM-4V-Flash`** (如果您需要多模态能力，例如图像理解)
 
-## 节点参数
-
-| 参数名称      | 类型    | 描述                                                         | 默认值/示例                  |
-| :------------ | :------ | :----------------------------------------------------------- | :--------------------------- |
-| `api_key`     | String  | 您的智谱AI API Key。**必填项。**                             | `YOUR_ZHIPU_AI_API_KEY_HERE` |
-| `text_input`  | String  | 发送给 GLM-4 模型的用户 Prompt。                             | `请写一个关于未来的短故事。` |
-| `model_name`  | String  | 要使用的 GLM 模型名称。目前支持 `glm-4`。                    | `glm-4`                      |
-| `temperature` | Float   | 控制生成文本的随机性。值越高，文本越随机（0.0-1.0）。        | `0.95`                       |
-| `top_p`       | Float   | 控制生成文本的多样性。值越高，模型考虑的词语越多（0.0-1.0）。 | `0.7`                        |
-| `max_tokens`  | Integer | 生成文本的最大长度（以 token 计）。                          | `512`                        |
-| `stream`      | Boolean | 是否以流式方式获取响应。设为 `True` 可能有助于实时显示生成过程。 | `False`                      |
-
-## 示例工作流
-
-请参考项目截图中的工作流示例，它们展示了 ComfyUI-GLM4 节点如何与其他 ComfyUI 节点协同工作。
-
-## 贡献
-
-欢迎对本项目进行贡献！如果您有任何建议、Bug 报告或希望添加新功能，请随时提交 Pull Request 或创建 Issue。
-
-## 许可证
-
-本项目遵循 MIT 许可证。详见 `LICENSE` 文件。
+这些是智谱AI提供的免费或有大量免费额度的模型，可以满足大部分日常使用需求。
 
 ---
+
+## 节点参数速查
+
+| 参数名称      | 描述                                                         | 默认值/示例                    |
+| :------------ | :----------------------------------------------------------- | :----------------------------- |
+| `api_key`     | **您的智谱AI API Key。必填项。**                             | `YOUR_ZHIPU_AI_API_KEY_HERE`   |
+| `text_input`  | 发送给 GLM-4 模型的用户指令/Prompt。                         | `请写一个关于未来的短故事。`   |
+| `model_name`  | 要使用的 GLM 模型名称。**推荐使用 `GLM-4-Flash` 或 `GLM-4V-Flash` (免费)**。 | `glm-4` (请手动更改为免费模型) |
+| `temperature` | 控制生成文本的随机性（0.0-1.0，值越高越随机）。              | `0.95`                         |
+| `top_p`       | 控制生成文本的多样性（0.0-1.0，值越高考虑的词语越多）。      | `0.7`                          |
+| `max_tokens`  | 生成文本的最大长度（以 token 计）。                          | `512`                          |
+
+---
+
