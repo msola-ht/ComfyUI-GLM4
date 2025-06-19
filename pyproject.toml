@@ -1,0 +1,15 @@
+[project]
+name = "glm4"
+description = ""
+version = "1.0.0"
+license = {file = "LICENSE"}
+
+[project.urls]
+Repository = "https://github.com/msola-ht/ComfyUI-GLM4"
+#  Used by Comfy Registry https://registry.comfy.org
+
+[tool.comfy]
+PublisherId = ""
+DisplayName = "ComfyUI-GLM4"
+Icon = ""
+includes = []
