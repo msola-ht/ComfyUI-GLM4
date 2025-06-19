@@ -1,0 +1,521 @@
+{
+  "id": "38d2cee7-4b33-42b9-840f-e9802e5ffc95",
+  "revision": 0,
+  "last_node_id": 34,
+  "last_link_id": 34,
+  "nodes": [
+    {
+      "id": 23,
+      "type": "LoadImage",
+      "pos": [
+        1490,
+        230
+      ],
+      "size": [
+        270,
+        314.0000305175781
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "图像",
+          "name": "image",
+          "type": "COMBO",
+          "widget": {
+            "name": "image"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "选择文件上传",
+          "name": "upload",
+          "type": "IMAGEUPLOAD",
+          "widget": {
+            "name": "upload"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "label": "图像",
+          "localized_name": "图像",
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            28
+          ]
+        },
+        {
+          "label": "遮罩",
+          "localized_name": "遮罩",
+          "name": "MASK",
+          "type": "MASK",
+          "links": null
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.41",
+        "Node name for S&R": "加载图像",
+        "widget_ue_connectable": {}
+      },
+      "widgets_values": [
+        "civitai1.jpg",
+        "image"
+      ]
+    },
+    {
+      "id": 25,
+      "type": "ShowText|pysssss",
+      "pos": [
+        2200,
+        230
+      ],
+      "size": [
+        440,
+        260
+      ],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "text",
+          "name": "text",
+          "type": "STRING",
+          "link": 26
+        }
+      ],
+      "outputs": [
+        {
+          "label": "字符串",
+          "localized_name": "字符串",
+          "name": "STRING",
+          "shape": 6,
+          "type": "STRING",
+          "links": []
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-custom-scripts",
+        "ver": "aac13aa7ce35b07d43633c3bbe654a38c00d74f5",
+        "Node name for S&R": "ShowText|pysssss",
+        "widget_ue_connectable": {}
+      },
+      "widgets_values": [
+        "A blonde woman with her hair styled in an elegant updo and blue eyes that are accentuated by long eyelashes. She has a serene expression on her face, and her fair skin is adorned with delicate freckles. Her large, expressive eyes draw attention, while her lips are slightly parted. She wears gold earrings with blue gemstones, adding a touch of sophistication to her overall appearance. The background is softly lit, casting gentle shadows and highlights across her features, enhancing the tranquil ambiance of the scene.\n\n"
+      ]
+    },
+    {
+      "id": 34,
+      "type": "ShowText|pysssss",
+      "pos": [
+        2210,
+        550
+      ],
+      "size": [
+        430,
+        190
+      ],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "text",
+          "name": "text",
+          "type": "STRING",
+          "link": 34
+        }
+      ],
+      "outputs": [
+        {
+          "label": "字符串",
+          "localized_name": "字符串",
+          "name": "STRING",
+          "shape": 6,
+          "type": "STRING",
+          "links": null
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-custom-scripts",
+        "ver": "aac13aa7ce35b07d43633c3bbe654a38c00d74f5",
+        "Node name for S&R": "ShowText|pysssss",
+        "widget_ue_connectable": {}
+      },
+      "widgets_values": [
+        "A blonde woman with her hair styled in an elegant updo and blue eyes that are accentuated by long eyelashes. She has a serene expression on her face, and her fair skin is adorned with delicate freckles. Her large, expressive eyes draw attention, while her lips are slightly parted. She wears gold earrings with blue gemstones, adding a touch of sophistication to her overall appearance. The background is softly lit, casting gentle shadows and highlights across her features, enhancing the tranquil ambiance of the scene.\n\n"
+      ]
+    },
+    {
+      "id": 30,
+      "type": "easy imageToBase64",
+      "pos": [
+        1550,
+        610
+      ],
+      "size": [
+        140,
+        26
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "图像",
+          "localized_name": "图像",
+          "name": "image",
+          "type": "IMAGE",
+          "link": 28
+        }
+      ],
+      "outputs": [
+        {
+          "label": "字符串",
+          "localized_name": "字符串",
+          "name": "STRING",
+          "type": "STRING",
+          "links": [
+            30
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-easy-use",
+        "ver": "de92038f88317699f314be85e5c7af84f1ab9c3a",
+        "Node name for S&R": "easy imageToBase64",
+        "widget_ue_connectable": {}
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 29,
+      "type": "GLM_Vision_ImageToPrompt",
+      "pos": [
+        1780,
+        230
+      ],
+      "size": [
+        410,
+        500
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "image_base64",
+          "name": "image_base64",
+          "type": "STRING",
+          "widget": {
+            "name": "image_base64"
+          },
+          "link": 30
+        },
+        {
+          "localized_name": "model_name",
+          "name": "model_name",
+          "type": "STRING",
+          "widget": {
+            "name": "model_name"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "api_key",
+          "name": "api_key",
+          "type": "STRING",
+          "widget": {
+            "name": "api_key"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "seed",
+          "name": "seed",
+          "type": "INT",
+          "widget": {
+            "name": "seed"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "prompt",
+          "name": "prompt",
+          "type": "STRING",
+          "widget": {
+            "name": "prompt"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "image_url",
+          "name": "image_url",
+          "shape": 7,
+          "type": "STRING",
+          "widget": {
+            "name": "image_url"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "GETPrompt",
+          "name": "GETPrompt",
+          "type": "STRING",
+          "links": [
+            26,
+            34
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "GLM_Vision_ImageToPrompt",
+        "widget_ue_connectable": {}
+      },
+      "widgets_values": [
+        "",
+        "glm-4v-flash",
+        "",
+        166838483165532,
+        "fixed",
+        "先理解这个图片上面的内容，然后生成描绘主体对象的[[英文]]短语，语言是english。生成规范是，记住你需要描绘我提供给你的图片细节尽可能的多，角度尽可能更加丰富，多写[逗号‘，']相连接的英文短语,切记一定需要在生成的prompt文本当中中添加下面这堆prompt，[[best quality, high resolution, 4k, high quality]]，描绘人称都用第三人称",
+        "",
+        [
+          false,
+          true
+        ],
+        [
+          false,
+          true
+        ]
+      ]
+    },
+    {
+      "id": 11,
+      "type": "ShowText|pysssss",
+      "pos": [
+        1930,
+        800
+      ],
+      "size": [
+        550,
+        350
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "text",
+          "name": "text",
+          "type": "STRING",
+          "link": 31
+        }
+      ],
+      "outputs": [
+        {
+          "label": "字符串",
+          "localized_name": "字符串",
+          "name": "STRING",
+          "shape": 6,
+          "type": "STRING",
+          "links": null
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-custom-scripts",
+        "ver": "aac13aa7ce35b07d43633c3bbe654a38c00d74f5",
+        "Node name for S&R": "ShowText|pysssss",
+        "widget_ue_connectable": {}
+      },
+      "widgets_values": [
+        "一只毛茸茸、活泼可爱的小狗，有着亮晶晶的黑色眼睛和蓬松的白色尾巴，在一片绿油油、鲜花盛开的草地上欢快地奔跑，它时而跳起来追逐飞舞的蝴蝶，时而用鼻子使劲嗅着地上的气味，动作敏捷而充满活力；镜头采用中景，视角略微仰视，展现小狗矫健的身姿和周围生机勃勃的自然环境，镜头缓慢地跟随小狗移动，捕捉它每一次跳跃和奔跑的瞬间；画面氛围充满童趣和欢乐，洋溢着夏日的阳光和自由自在的气息；整体风格化呈现为温馨的卡通动画风格，色彩鲜艳明亮，细节丰富可爱。"
+      ]
+    },
+    {
+      "id": 31,
+      "type": "GLM_Text_Chat",
+      "pos": [
+        1240,
+        800
+      ],
+      "size": [
+        610,
+        680
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "system_prompt_override",
+          "name": "system_prompt_override",
+          "type": "STRING",
+          "widget": {
+            "name": "system_prompt_override"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "api_key",
+          "name": "api_key",
+          "type": "STRING",
+          "widget": {
+            "name": "api_key"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "model_name",
+          "name": "model_name",
+          "type": "STRING",
+          "widget": {
+            "name": "model_name"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "temperature",
+          "name": "temperature",
+          "type": "FLOAT",
+          "widget": {
+            "name": "temperature"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "top_p",
+          "name": "top_p",
+          "type": "FLOAT",
+          "widget": {
+            "name": "top_p"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "max_tokens",
+          "name": "max_tokens",
+          "type": "INT",
+          "widget": {
+            "name": "max_tokens"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "seed",
+          "name": "seed",
+          "type": "INT",
+          "widget": {
+            "name": "seed"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "text_input",
+          "name": "text_input",
+          "type": "STRING",
+          "widget": {
+            "name": "text_input"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "response_text",
+          "name": "response_text",
+          "type": "STRING",
+          "links": [
+            31
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "GLM_Text_Chat",
+        "widget_ue_connectable": {}
+      },
+      "widgets_values": [
+        "请根据以下提示内容，将文生视频的提示词扩写成一段完整的话。最终的视频提示词应包含六个核心要素：主体(主体描述)、场景(场景描述)、运动(运动描述)、镜头语言、氛围词和风格化。\n\n主体描述是对主体外观特征细节的描述，可通过形容词或短句列举，例如“一位身着少数民族服饰的黑发苗族少女”或“一位来自异世界的飞天仙子，身着破旧却华丽的服饰，背后展开一对由废墟碎片构成的奇异翅膀”。场景描述是对主体所处环境特征细节的描述，可通过形容词或短句列举。运动描述是对运动特征细节的描述，包含运动的幅度、速率和运动作用的效果，例如“猛烈地摇摆”、“缓慢地移动”或“打碎了玻璃”。镜头语言包含景别、视角、镜头、运镜等，常见镜头语言详见下方提示词词典。氛围词是对预期画面氛围的描述，例如“梦幻”、“孤独”或“宏伟”，常见氛围词详见下方提示词词典。风格化是对画面风格语言的描述，例如“赛博朋克”、“勾线插画”或“废土风格”，常见风格化详见下方提示词词典。\n\n#只显示最终扩写后的视频提示词，并且用一段话呈现",
+        "",
+        "glm-4-flash-250414",
+        0.9,
+        0.7,
+        1024,
+        993570710303144,
+        "randomize",
+        "请扩写关于一只小狗在草地上玩耍的视频提示词。",
+        [
+          false,
+          true
+        ],
+        [
+          false,
+          true
+        ]
+      ]
+    }
+  ],
+  "links": [
+    [
+      26,
+      29,
+      0,
+      25,
+      0,
+      "STRING"
+    ],
+    [
+      28,
+      23,
+      0,
+      30,
+      0,
+      "IMAGE"
+    ],
+    [
+      30,
+      30,
+      0,
+      29,
+      0,
+      "STRING"
+    ],
+    [
+      31,
+      31,
+      0,
+      11,
+      0,
+      "STRING"
+    ],
+    [
+      34,
+      29,
+      0,
+      34,
+      0,
+      "STRING"
+    ]
+  ],
+  "groups": [],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.8769226950000005,
+      "offset": [
+        -1140,
+        -130
+      ]
+    },
+    "ue_links": [],
+    "links_added_by_ue": []
+  },
+  "version": 0.4
+}
