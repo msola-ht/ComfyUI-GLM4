@@ -1,27 +1,20 @@
-# glm.py
-
 import os
 import json
-import base64 # 尽管不再有 ImageToBase64 节点，但 base64 库本身可能仍被其他地方（例如未来的多模态输入）用到，暂时保留导入。
+import base64
 from zhipuai import ZhipuAI
 import random
-# from PIL import Image # 不再需要PIL，因为没有图像处理了
-# import io # 不再需要io，因为没有图像处理了
-# import torch # 不再需要torch，因为没有图像处理了
-
-# 确保 zhipuai 库已安装：pip install zhipuai
 
 # 辅助函数：尝试从环境变量或配置文件获取智谱AI API Key
-def get_ZhipuAI_api_key():
+def get_zhipuai_api_key(): # 统一函数命名风格，改为小写加下划线
     """
-    尝试从环境变量 ZHIPU_API_KEY 获取智谱AI API Key。
+    尝试从环境变量 ZHIPUAI_API_KEY 获取智谱AI API Key。
     如果环境变量不存在，则尝试从同目录下的 config.json 文件中读取。
     返回 API Key 字符串，如果未找到则返回空字符串。
     """
     # 1. 优先从环境变量获取
-    env_api_key = os.getenv("ZHIPU_API_KEY")
+    env_api_key = os.getenv("ZHIPUAI_API_KEY")
     if env_api_key:
-        print("[GLM_Nodes] 使用环境变量 ZHIPU_API_KEY。")
+        print("[GLM_Nodes] 使用环境变量 ZHIPUAI_API_KEY。")
         return env_api_key
 
     # 2. 如果环境变量不存在，尝试从 config.json 文件读取
@@ -33,12 +26,12 @@ def get_ZhipuAI_api_key():
         if os.path.exists(config_path):
             with open(config_path, 'r', encoding='utf-8') as f: # 明确指定编码
                 config = json.load(f)
-            api_key = config.get("ZHIPU_API_KEY") # 使用 .get() 避免 KeyError
+            api_key = config.get("ZHIPUAI_API_KEY") # 使用 .get() 避免 KeyError
             if api_key:
                 print(f"[GLM_Nodes] 从 {config_path} 读取 API Key。")
                 return api_key
             else:
-                print(f"[GLM_Nodes] 警告：在 {config_path} 中未找到有效的 ZHIPU_API_KEY 字段。")
+                print(f"[GLM_Nodes] 警告：在 {config_path} 中未找到有效的 ZHIPUAI_API_KEY 字段。")
                 return ""
         else:
             print(f"[GLM_Nodes] 警告：未找到 API Key 配置文件 {config_path}。")
@@ -82,7 +75,6 @@ class GLM_Text_Chat:
         return {
             "required": {
                 "system_prompt_override": ("STRING", {"multiline": True, "default": GLM_Text_Chat.FIXED_SYSTEM_PROMPT, "placeholder": "系统提示词 (留空则使用默认固定提示词)"}),
-                # 关键修改：api_key 的 default 值设为空字符串，这样用户界面默认是空的
                 "api_key": ("STRING", {"default": "", "multiline": False, "placeholder": "可选：智谱AI API Key (留空则尝试从环境变量或config.json读取)"}),
                 "model_name": ("STRING", {"default": "glm-4-flash-250414", "placeholder": "请输入模型名称，如 glm-4-flash-250414"}),
                 "temperature": ("FLOAT", {"default": 0.9, "min": 0.0, "max": 1.0, "step": 0.01}),
@@ -101,10 +93,10 @@ class GLM_Text_Chat:
         # 如果节点输入的 api_key 非空，则使用它；否则尝试从环境变量/配置文件获取
         final_api_key = api_key.strip()
         if not final_api_key:
-            final_api_key = get_ZhipuAI_api_key()
+            final_api_key = get_zhipuai_api_key() # 调用统一的获取函数
             if not final_api_key: # 如果从环境变量/配置文件也未获取到
-                return ("Error: 智谱AI API Key 未提供。请在节点输入中填写，或设置环境变量 'ZHIPU_API_KEY'，或在 config.json 中配置。",)
-            print("[GLM_Nodes] 使用从环境变量或 config.json 获取的 API Key。")
+                return ("Error: 智谱AI API Key 未提供。请在节点输入中填写，或设置环境变量 'ZHIPUAI_API_KEY'，或在 config.json 中配置。",)
+            # 日志已在 get_zhipuai_api_key 中打印
         else:
             print("[GLM_Nodes] 使用节点输入中提供的 API Key。")
 
@@ -231,11 +223,13 @@ class GLM_Vision_ImageToPrompt:
         # 如果节点输入的 api_key 非空，则使用它；否则尝试从环境变量/配置文件获取
         final_api_key = api_key.strip()
         if not final_api_key:
-            final_api_key = get_ZhipuAI_api_key()
+            final_api_key = get_zhipuai_api_key() # 调用统一的获取函数
             if not final_api_key: # 如果从环境变量/配置文件也未获取到
-                return ("Error: 智谱AI API Key 未提供。请在节点输入中填写，或设置环境变量 'ZHIPU_API_KEY'，或在 config.json 中配置。",)
-            print("[GLM_Nodes] 使用从环境变量或 config.json 获取的 API Key。")
+                # 统一错误提示信息
+                return ("Error: 智谱AI API Key 未提供。请在节点输入中填写，或设置环境变量 'ZHIPUAI_API_KEY'，或在 config.json 中配置。",)
+            # 日志已在 get_zhipuai_api_key 中打印
         else:
+            # 统一日志输出
             print("[GLM_Nodes] 使用节点输入中提供的 API Key。")
 
         try:
@@ -329,12 +323,10 @@ class GLM_Vision_ImageToPrompt:
 NODE_CLASS_MAPPINGS = {
     "GLM_Text_Chat": GLM_Text_Chat,
     "GLM_Vision_ImageToPrompt": GLM_Vision_ImageToPrompt,
-    # "ImageToBase64": ImageToBase64, # 移除 ImageToBase64 节点
 }
 
 # ComfyUI 节点显示名称映射
 NODE_DISPLAY_NAME_MAPPINGS = {
     "GLM_Text_Chat": "GLM文本对话",
     "GLM_Vision_ImageToPrompt": "GLM识图生成提示词",
-    # "ImageToBase64": "图像转Base64 (自动格式)", # 移除 ImageToBase64 节点显示名称
 }
