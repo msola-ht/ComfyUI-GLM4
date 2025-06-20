@@ -72,4 +72,4 @@
 
 ---
 
-<img src="/image/微信图片_20250620124237.png" alt="ComfyUI-GLM4" style="zoom: 20%;" />
+<img src="/image/微信图片_20250620124237.png" alt="ComfyUI-GLM4" width="200px" />
