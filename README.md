@@ -4,7 +4,7 @@
 
 **ComfyUI-GLM4** 是一个 ComfyUI 自定义节点，让您可以在 ComfyUI 中直接使用智谱AI的 **GLM-4 大语言模型**，为您的图像生成或自动化流程提供智能文本支持。
 
-![ComfyUI-GLM4](/image/PixPin_2025-06-19_20-50-03.png)
+![ComfyUI-GLM4](/image/PixPin_2025-06-20_10-35-30.png)
 
 ## 核心功能
 
