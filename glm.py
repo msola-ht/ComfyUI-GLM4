@@ -82,7 +82,8 @@ class GLM_Text_Chat:
         return {
             "required": {
                 "system_prompt_override": ("STRING", {"multiline": True, "default": GLM_Text_Chat.FIXED_SYSTEM_PROMPT, "placeholder": "系统提示词 (留空则使用默认固定提示词)"}),
-                "api_key": ("STRING", {"default": get_ZhipuAI_api_key(), "multiline": False, "placeholder": "可选：智谱AI API Key (推荐设为环境变量 ZHIPU_API_KEY 或 config.json)"}),
+                # 关键修改：api_key 的 default 值设为空字符串，这样用户界面默认是空的
+                "api_key": ("STRING", {"default": "", "multiline": False, "placeholder": "可选：智谱AI API Key (留空则尝试从环境变量或config.json读取)"}),
                 "model_name": ("STRING", {"default": "glm-4-flash-250414", "placeholder": "请输入模型名称，如 glm-4-flash-250414"}),
                 "temperature": ("FLOAT", {"default": 0.9, "min": 0.0, "max": 1.0, "step": 0.01}),
                 "top_p": ("FLOAT", {"default": 0.7, "min": 0.0, "max": 1.0, "step": 0.01}),
@@ -96,11 +97,17 @@ class GLM_Text_Chat:
         """
         执行智谱AI GLM-4 文本聊天功能。
         """
-        # API Key 获取逻辑优化，优先使用节点输入，其次通过 get_ZhipuAI_api_key 获取
-        final_api_key = api_key.strip() if api_key and api_key.strip() else get_ZhipuAI_api_key()
-
+        # 关键修改：API Key 获取逻辑
+        # 如果节点输入的 api_key 非空，则使用它；否则尝试从环境变量/配置文件获取
+        final_api_key = api_key.strip()
         if not final_api_key:
-            return ("Error: 智谱AI API Key 未提供。请在节点输入中填写，或设置环境变量 'ZHIPU_API_KEY'，或在 config.json 中配置。",)
+            final_api_key = get_ZhipuAI_api_key()
+            if not final_api_key: # 如果从环境变量/配置文件也未获取到
+                return ("Error: 智谱AI API Key 未提供。请在节点输入中填写，或设置环境变量 'ZHIPU_API_KEY'，或在 config.json 中配置。",)
+            print("[GLM_Nodes] 使用从环境变量或 config.json 获取的 API Key。")
+        else:
+            print("[GLM_Nodes] 使用节点输入中提供的 API Key。")
+
 
         try:
             current_client = ZhipuAI(api_key=final_api_key)
@@ -185,11 +192,11 @@ class GLM_Vision_ImageToPrompt:
                     "default": "glm-4v-flash",
                     "placeholder": "请输入模型名称，如 glm-4v-flash"
                 }),
-                # 然后是 api_key
+                # 关键修改：api_key 的 default 值设为空字符串，这样用户界面默认是空的
                 "api_key":  ("STRING", {
                     "multiline": False,
-                    "default": get_ZhipuAI_api_key(),
-                    "placeholder": "可选：智谱AI API Key (推荐设为环境变量 ZHIPU_API_KEY 或 config.json)"
+                    "default": "", # 默认值为空字符串
+                    "placeholder": "可选：智谱AI API Key (留空则尝试从环境变量或config.json读取)"
                 }),
                 # 增加随机种子 (智谱AI GLM-4V API通常不支持直接的seed参数，此参数仅用于ComfyUI节点内部)
                 "seed": ("INT", {
@@ -220,11 +227,16 @@ class GLM_Vision_ImageToPrompt:
         """
         执行智谱AI GLM-4V 识图生成提示词功能。
         """
-        # API Key 获取逻辑优化，优先使用节点输入，其次通过 get_ZhipuAI_api_key 获取
-        final_api_key = api_key.strip() if api_key and api_key.strip() else get_ZhipuAI_api_key()
-
+        # 关键修改：API Key 获取逻辑
+        # 如果节点输入的 api_key 非空，则使用它；否则尝试从环境变量/配置文件获取
+        final_api_key = api_key.strip()
         if not final_api_key:
-            return ("Error: 智谱AI API Key 未提供。请在节点输入中填写，或设置环境变量 'ZHIPU_API_KEY'，或在 config.json 中配置。",)
+            final_api_key = get_ZhipuAI_api_key()
+            if not final_api_key: # 如果从环境变量/配置文件也未获取到
+                return ("Error: 智谱AI API Key 未提供。请在节点输入中填写，或设置环境变量 'ZHIPU_API_KEY'，或在 config.json 中配置。",)
+            print("[GLM_Nodes] 使用从环境变量或 config.json 获取的 API Key。")
+        else:
+            print("[GLM_Nodes] 使用节点输入中提供的 API Key。")
 
         try:
             client = ZhipuAI(api_key=final_api_key)
@@ -326,4 +338,3 @@ NODE_DISPLAY_NAME_MAPPINGS = {
     "GLM_Vision_ImageToPrompt": "GLM识图生成提示词",
     # "ImageToBase64": "图像转Base64 (自动格式)", # 移除 ImageToBase64 节点显示名称
 }
-
