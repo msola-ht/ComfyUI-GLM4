@@ -12,11 +12,11 @@
 
 ### 反推
 
-![](image\PixPin_2025-06-21_23-09-55.png)
+![](/image/PixPin_2025-06-21_23-09-55.png)
 
 ### 扩写
 
-![](image\PixPin_2025-06-21_23-09-47.png)
+![](/image/PixPin_2025-06-21_23-09-47.png)
 
 ## 核心功能
 
@@ -54,8 +54,7 @@
     *   在工作流画布中**右键点击**，选择 `Add Node` -> `ComfyUI-GLM4` (或类似名称)。
 2.  **配置 API Key**：
     *   在 ComfyUI-GLM4 节点上，找到 `api_key` 输入框。
-    *   将您在智谱AI平台获取到的 API Key 粘贴到此框中（替换 `YOUR_ZHIPU_AI_API_KEY_HERE`）。
-    *   <img src="/image/PixPin_2025-06-21_23-19-24.png" alt="ComfyUI-GLM4" width="200px" />
+    *   将您在智谱AI平台获取到的 API Key 粘贴到此框中（替换 `YOUR_ZHIPU_AI_API_KEY_HERE`）。<img src="/image/PixPin_2025-06-21_23-19-24.png" alt="ComfyUI-GLM4" width="200px" />
     *   环境变量设置 ZHIPUAI_API_KEY："YOUR_ZHIPUAI_API_KEY_HERE"
     *   Config 设置 KEY
 3.  **连接并运行**：
