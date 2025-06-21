@@ -4,7 +4,19 @@
 
 **ComfyUI-GLM4** 是一个 ComfyUI 自定义节点，让您可以在 ComfyUI 中直接使用智谱AI的 **GLM-4 大语言模型**，为您的图像生成或自动化流程提供智能文本支持。
 
-![ComfyUI-GLM4](/image/PixPin_2025-06-20_10-35-30.png)
+## 视频反推及扩写
+
+![ComfyUI-GLM4](/image/PixPin_2025-06-21_23-10-51.png)
+
+## Flux 提示词
+
+### 反推
+
+![](image\PixPin_2025-06-21_23-09-55.png)
+
+### 扩写
+
+![](image\PixPin_2025-06-21_23-09-47.png)
 
 ## 核心功能
 
@@ -43,6 +55,9 @@
 2.  **配置 API Key**：
     *   在 ComfyUI-GLM4 节点上，找到 `api_key` 输入框。
     *   将您在智谱AI平台获取到的 API Key 粘贴到此框中（替换 `YOUR_ZHIPU_AI_API_KEY_HERE`）。
+    *   <img src="/image/PixPin_2025-06-21_23-19-24.png" alt="ComfyUI-GLM4" width="200px" />
+    *   环境变量设置 ZHIPUAI_API_KEY："YOUR_ZHIPUAI_API_KEY_HERE"
+    *   Config 设置 KEY
 3.  **连接并运行**：
     *   将您的文本输入（Prompt）连接到 `text_input` 端。
     *   将节点的 `text_output` 端连接到需要接收文本的节点（例如：`CLIP Text Encode` 用于图像生成，或 `Text` 节点用于显示结果）。
@@ -56,19 +71,6 @@
 *   **`GLM-4V-Flash`** (如果您需要多模态能力，例如图像理解)
 
 这些是智谱AI提供的免费或有大量免费额度的模型，可以满足大部分日常使用需求。
-
----
-
-## 节点参数速查
-
-| 参数名称      | 描述                                                         | 默认值/示例                    |
-| :------------ | :----------------------------------------------------------- | :----------------------------- |
-| `api_key`     | **您的智谱AI API Key。必填项。**                             | `YOUR_ZHIPU_AI_API_KEY_HERE`   |
-| `text_input`  | 发送给 GLM-4 模型的用户指令/Prompt。                         | `请写一个关于未来的短故事。`   |
-| `model_name`  | 要使用的 GLM 模型名称。**推荐使用 `GLM-4-Flash` 或 `GLM-4V-Flash` (免费)**。 | `glm-4` (请手动更改为免费模型) |
-| `temperature` | 控制生成文本的随机性（0.0-1.0，值越高越随机）。              | `0.95`                         |
-| `top_p`       | 控制生成文本的多样性（0.0-1.0，值越高考虑的词语越多）。      | `0.7`                          |
-| `max_tokens`  | 生成文本的最大长度（以 token 计）。                          | `512`                          |
 
 ---
 
