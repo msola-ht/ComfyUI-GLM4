@@ -1,29 +1,109 @@
 {
-  "id": "38d2cee7-4b33-42b9-840f-e9802e5ffc95",
+  "id": "0c6226d6-57f9-4c9e-906a-be819ea4e643",
   "revision": 0,
-  "last_node_id": 41,
-  "last_link_id": 38,
+  "last_node_id": 24,
+  "last_link_id": 27,
   "nodes": [
     {
-      "id": 30,
-      "type": "easy imageToBase64",
+      "id": 7,
+      "type": "ShowText|pysssss",
       "pos": [
-        1410,
-        550
+        320,
+        -190
       ],
       "size": [
-        140,
-        26
+        340,
+        320
       ],
       "flags": {},
       "order": 3,
       "mode": 0,
       "inputs": [
         {
+          "name": "text",
+          "type": "STRING",
+          "link": 17
+        }
+      ],
+      "outputs": [
+        {
+          "label": "字符串",
+          "name": "STRING",
+          "shape": 6,
+          "type": "STRING",
+          "links": null
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-custom-scripts",
+        "ver": "aac13aa7ce35b07d43633c3bbe654a38c00d74f5",
+        "Node name for S&R": "ShowText|pysssss",
+        "widget_ue_connectable": {}
+      },
+      "widgets_values": [
+        "一只活泼可爱的拉布拉多幼犬，拥有柔软顺滑的巧克力色被毛，水汪汪的大眼睛闪烁着好奇与兴奋，鼻子不停地嗅探着四周，耳朵随着它的动作轻轻抖动。它身处一片绿意盎然的夏日草地上，阳光透过稀疏的云层，斑驳地洒在起伏的草叶上，远处有几棵高大的树木投下墨绿色的阴影，微风拂过，带来青草的清新气息。小狗兴奋地扑向空中，用前爪抓住一个五彩斑斓的飞盘，身体在空中划出一道优美的弧线，然后用力向下摔落，接着快速转身，另一只爪子精准地接住飞盘，发出欢快的吠叫声。中景到近景切换，采用跟随镜头，平视角度拍摄，捕捉小狗跳跃的瞬间和它专注的神情，镜头时而轻微推近，强调它的表情，时而平稳跟随，展现它奔跑的动态。画面洋溢着无忧无虑的快乐和童真，充满活力与动感，采用明亮、饱和度高的写实风格，如同电影般生动。"
+      ]
+    },
+    {
+      "id": 8,
+      "type": "ShowText|pysssss",
+      "pos": [
+        460,
+        250
+      ],
+      "size": [
+        340,
+        500
+      ],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "text",
+          "type": "STRING",
+          "link": 21
+        }
+      ],
+      "outputs": [
+        {
+          "label": "字符串",
+          "name": "STRING",
+          "shape": 6,
+          "type": "STRING",
+          "links": null
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-custom-scripts",
+        "ver": "aac13aa7ce35b07d43633c3bbe654a38c00d74f5",
+        "Node name for S&R": "ShowText|pysssss",
+        "widget_ue_connectable": {}
+      },
+      "widgets_values": [
+        "一位穿着白色长袖上衣和黑色百褶裙的长发女孩，站在室内环境中，双手自然下垂，身体微微前倾，展现出自信的姿态。背景是一扇关闭的门和一张白色的桌子，整个场景显得简洁而温馨。"
+      ]
+    },
+    {
+      "id": 9,
+      "type": "easy imageToBase64",
+      "pos": [
+        -180,
+        620
+      ],
+      "size": [
+        140,
+        26
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [
+        {
           "label": "图像",
           "name": "image",
           "type": "IMAGE",
-          "link": 28
+          "link": 5
         }
       ],
       "outputs": [
@@ -32,7 +112,7 @@
           "name": "STRING",
           "type": "STRING",
           "links": [
-            30
+            20
           ]
         }
       ],
@@ -45,55 +125,15 @@
       "widgets_values": []
     },
     {
-      "id": 11,
-      "type": "ShowText|pysssss",
-      "pos": [
-        2010,
-        810
-      ],
-      "size": [
-        550,
-        350
-      ],
-      "flags": {},
-      "order": 4,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "text",
-          "type": "STRING",
-          "link": 31
-        }
-      ],
-      "outputs": [
-        {
-          "label": "字符串",
-          "name": "STRING",
-          "shape": 6,
-          "type": "STRING",
-          "links": null
-        }
-      ],
-      "properties": {
-        "cnr_id": "comfyui-custom-scripts",
-        "ver": "aac13aa7ce35b07d43633c3bbe654a38c00d74f5",
-        "Node name for S&R": "ShowText|pysssss",
-        "widget_ue_connectable": {}
-      },
-      "widgets_values": [
-        "一位活泼可爱、毛茸茸的白色拉布拉多幼犬，拥有明亮的棕色眼睛和摇摆的尾巴，在一片绿意盎然、鲜花点缀的广阔草地上欢快地奔跑；小狗像一阵轻风般快速地穿梭在草丛中，时而跳起扑向空中飞舞的彩色蝴蝶，时而用鼻子使劲嗅着地上的气味，欢快地摇着身体；采用中景镜头跟随小狗的动态，视角略微高于地面以展现草地的细节，镜头以平缓的跟随运镜方式捕捉小狗的每一次跳跃和奔跑，营造一种充满生机的氛围；画面风格采用明亮温暖的色调，结合轻微的动态模糊效果，呈现出一种清新自然的风格化感觉，整体呈现出童真、欢乐的氛围。"
-      ]
-    },
-    {
-      "id": 23,
+      "id": 10,
       "type": "LoadImage",
       "pos": [
-        1350,
-        170
+        -240,
+        240
       ],
       "size": [
         270,
-        314.0000305175781
+        314
       ],
       "flags": {},
       "order": 0,
@@ -101,15 +141,13 @@
       "inputs": [],
       "outputs": [
         {
-          "label": "图像",
           "name": "IMAGE",
           "type": "IMAGE",
           "links": [
-            28
+            5
           ]
         },
         {
-          "label": "遮罩",
           "name": "MASK",
           "type": "MASK",
           "links": null
@@ -118,64 +156,24 @@
       "properties": {
         "cnr_id": "comfy-core",
         "ver": "0.3.41",
-        "Node name for S&R": "加载图像",
+        "Node name for S&R": "LoadImage",
         "widget_ue_connectable": {}
       },
       "widgets_values": [
-        "civitai1.jpg",
+        "091fc180160bfbe06eb57cdf0469b2a.png",
         "image"
       ]
     },
     {
-      "id": 25,
-      "type": "ShowText|pysssss",
-      "pos": [
-        2090,
-        170
-      ],
-      "size": [
-        440,
-        260
-      ],
-      "flags": {},
-      "order": 6,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "text",
-          "type": "STRING",
-          "link": 26
-        }
-      ],
-      "outputs": [
-        {
-          "label": "字符串",
-          "name": "STRING",
-          "shape": 6,
-          "type": "STRING",
-          "links": []
-        }
-      ],
-      "properties": {
-        "cnr_id": "comfyui-custom-scripts",
-        "ver": "aac13aa7ce35b07d43633c3bbe654a38c00d74f5",
-        "Node name for S&R": "ShowText|pysssss",
-        "widget_ue_connectable": {}
-      },
-      "widgets_values": [
-        "一位金色卷发女性，戴着蓝色耳环，穿着露肩礼服，在豪华宴会厅内优雅地行走，背景灯光闪烁，营造出奢华的氛围。她自信地迈步，姿态从容，仿佛正在参加一场重要的社交活动。镜头采用远景，从高处俯瞰，随着她的步伐缓缓推进，展现出她的优雅气质和高贵身份。氛围庄重、典雅、高贵。"
-      ]
-    },
-    {
-      "id": 31,
+      "id": 18,
       "type": "GLM_Text_Chat",
       "pos": [
-        1320,
-        810
+        -90,
+        -200
       ],
       "size": [
-        590,
-        690
+        400,
+        334
       ],
       "flags": {},
       "order": 1,
@@ -186,25 +184,25 @@
           "name": "response_text",
           "type": "STRING",
           "links": [
-            31
+            17
           ]
         }
       ],
       "properties": {
         "cnr_id": "ComfyUI-GLM4",
-        "ver": "20261c3e2584bc6f24cba8cd7a0c89bcff9ad8e6",
+        "ver": "c4aad9273bb13a74c48526da0856bd0b3e104664",
         "Node name for S&R": "GLM_Text_Chat",
-        "aux_id": "msola-ht/ComfyUI-GLM4",
         "widget_ue_connectable": {}
       },
       "widgets_values": [
-        "请根据以下提示内容，将文生视频的提示词扩写成一段完整的话。最终的视频提示词应包含六个核心要素：主体(主体描述)、场景(场景描述)、运动(运动描述)、镜头语言、氛围词和风格化。\n\n主体描述是对主体外观特征细节的描述，可通过形容词或短句列举，例如“一位身着少数民族服饰的黑发苗族少女”或“一位来自异世界的飞天仙子，身着破旧却华丽的服饰，背后展开一对由废墟碎片构成的奇异翅膀”。场景描述是对主体所处环境特征细节的描述，可通过形容词或短句列举。运动描述是对运动特征细节的描述，包含运动的幅度、速率和运动作用的效果，例如“猛烈地摇摆”、“缓慢地移动”或“打碎了玻璃”。镜头语言包含景别、视角、镜头、运镜等，常见镜头语言详见下方提示词词典。氛围词是对预期画面氛围的描述，例如“梦幻”、“孤独”或“宏伟”，常见氛围词详见下方提示词词典。风格化是对画面风格语言的描述，例如“赛博朋克”、“勾线插画”或“废土风格”，常见风格化详见下方提示词词典。\n\n#只显示最终扩写后的视频提示词，并且用一段话呈现",
-        "cc3cfc955fdb94acd6950ef32134656e.lf2OZ3tXm7srbUs0",
+        "默认视频扩写提示",
+        "",
+        "",
         "glm-4-flash-250414",
         0.9,
         0.7,
         1024,
-        560221535043322,
+        16989113619993,
         "randomize",
         "请扩写关于一只小狗在草地上玩耍的视频提示词。",
         [
@@ -218,18 +216,18 @@
       ]
     },
     {
-      "id": 29,
+      "id": 20,
       "type": "GLM_Vision_ImageToPrompt",
       "pos": [
-        1640,
-        170
+        50,
+        250
       ],
       "size": [
-        410,
-        500
+        400,
+        286
       ],
       "flags": {},
-      "order": 5,
+      "order": 4,
       "mode": 0,
       "inputs": [
         {
@@ -238,7 +236,7 @@
           "widget": {
             "name": "image_base64"
           },
-          "link": 30
+          "link": 20
         }
       ],
       "outputs": [
@@ -246,24 +244,24 @@
           "name": "GETPrompt",
           "type": "STRING",
           "links": [
-            26
+            21
           ]
         }
       ],
       "properties": {
         "cnr_id": "ComfyUI-GLM4",
-        "ver": "20261c3e2584bc6f24cba8cd7a0c89bcff9ad8e6",
+        "ver": "c4aad9273bb13a74c48526da0856bd0b3e104664",
         "Node name for S&R": "GLM_Vision_ImageToPrompt",
-        "aux_id": "msola-ht/ComfyUI-GLM4",
         "widget_ue_connectable": {}
       },
       "widgets_values": [
+        "视频提示词生成指南",
         "",
         "glm-4v-flash",
-        "cc3cfc955fdb94acd6950ef32134656e.lf2OZ3tXm7srbUs0",
-        277026620498808,
+        "",
+        1073397559378314,
         "randomize",
-        "及时一个AI视频提示词专家，我需要你帮我根据参考图生成让图像动起来的提示词，要求：\n\n提示词=主体(主体描述)+场景(场景描述)+运动(运动描述)+镜头语言+氛围词+风格化主体描述:主体描述是对主体外观特征细节的描述，可通过形容词或短句列举，例如“一位身着少数民族服饰的黑发苗族少女”、\"一位来自异世界的飞天仙子，身着破旧却华丽的服饰，背后展开一对由废墟碎片构成的奇异翅膀”。场景描述:场景描述是对主体所处环境特征细节的描述，可通过形容词或短句列举运动描述:运动描述是对运动特征细节的描述，包含运动的幅度、速率和运动作用的效果，例如“猛烈地摇摆”、\"缓慢地移动\"、\"打碎了玻璃\"。镜头语言:镜头语言包含景别、视角、镜头、运镜等，常见镜头语言详见下方提示词词典。\n氛围词:氛围词是对预期画面氛围的描述，例如“梦幻\"、“孤独”、“宏伟\"，常见氛围词详见下方提示词词典。\n风格化:风格化是对画面风格语言的描述，例如“赛博朋克”、\"勾线插画”、\"废土风格\"，常见风格化详见下方提示词词典。\n\n参考案例如下：\n```\n一位身穿轻盈白色连衣裙的长发美女，肤色白皙，眼神温柔，微笑着，神情宁静。在金色的沙滩上，阳光明媚，海浪轻拍岸边，远处是碧蓝的大海与无边的天空交接，海风轻拂。她轻轻地在沙滩上步行，步伐优雅而缓慢，时而低头踩踏着海水，留下清晰的脚印，时而抬起头看向远方，微风吹动她的长发。镜头采用中景，稍微偏低的视角，以侧面跟随镜头运作，画面随她的步伐缓缓推进。镜头会偶尔拉近，捕捉她面部的柔和表情和细微的动作变化。宁静、柔和、浪漫、梦幻。清新自然的摄影风格，带有暖色调，画面略带柔焦效果，给人一种温暖的海边度假感。\n```\n\n#请为我按照要求让图像动起来，提示词要求简洁通顺连贯，文字要求50字以内，并且只用一段话呈现\n",
+        "",
         "",
         [
           false,
@@ -274,87 +272,64 @@
           true
         ]
       ]
-    },
-    {
-      "id": 41,
-      "type": "MarkdownNote",
-      "pos": [
-        950,
-        130
-      ],
-      "size": [
-        360,
-        250
-      ],
-      "flags": {},
-      "order": 2,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [],
-      "properties": {},
-      "widgets_values": [
-        "# 一个是反推提示词\n\n# 一个是识图并扩写提示词\n\n# 具体注册API自行使用"
-      ],
-      "color": "#c09430",
-      "bgcolor": "rgba(24,24,27,.9)"
     }
   ],
   "links": [
     [
-      26,
-      29,
+      5,
+      10,
       0,
-      25,
-      0,
-      "STRING"
-    ],
-    [
-      28,
-      23,
-      0,
-      30,
+      9,
       0,
       "IMAGE"
     ],
     [
-      30,
-      30,
+      17,
+      18,
       0,
-      29,
+      7,
       0,
       "STRING"
     ],
     [
-      31,
-      31,
+      20,
+      9,
       0,
-      11,
+      20,
+      0,
+      "STRING"
+    ],
+    [
+      21,
+      20,
+      0,
+      8,
       0,
       "STRING"
     ]
   ],
   "groups": [
     {
-      "id": 2,
-      "title": "GLM识图",
+      "id": 1,
+      "title": "反推",
       "bounding": [
-        1340,
-        100,
-        1200,
-        583.5999755859375
+        -250,
+        170,
+        1060,
+        593.5999755859375
       ],
       "color": "#3f789e",
       "font_size": 24,
       "flags": {}
     },
     {
-      "id": 4,
-      "title": "GLM扩写",
+      "id": 2,
+      "title": "扩写",
       "bounding": [
-        1310,
-        740,
-        1260,
-        773.5999755859375
+        -100,
+        -270,
+        770,
+        417.6000061035156
       ],
       "color": "#3f789e",
       "font_size": 24,
@@ -364,15 +339,14 @@
   "config": {},
   "extra": {
     "ds": {
-      "scale": 0.7247295000000022,
+      "scale": 0.7247295000000004,
       "offset": [
-        -330.26180069746295,
-        -163.45790071499897
+        1310.2388753321065,
+        370.0902219379781
       ]
     },
     "ue_links": [],
     "links_added_by_ue": [],
-    "groupNodes": {},
     "frontendVersion": "1.22.2",
     "VHS_latentpreview": false,
     "VHS_latentpreviewrate": 0,
