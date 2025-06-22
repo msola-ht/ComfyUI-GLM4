@@ -1,8 +1,8 @@
 {
   "id": "0c6226d6-57f9-4c9e-906a-be819ea4e643",
   "revision": 0,
-  "last_node_id": 24,
-  "last_link_id": 27,
+  "last_node_id": 33,
+  "last_link_id": 38,
   "nodes": [
     {
       "id": 7,
@@ -16,13 +16,13 @@
         320
       ],
       "flags": {},
-      "order": 3,
+      "order": 4,
       "mode": 0,
       "inputs": [
         {
           "name": "text",
           "type": "STRING",
-          "link": 17
+          "link": 38
         }
       ],
       "outputs": [
@@ -41,28 +41,28 @@
         "widget_ue_connectable": {}
       },
       "widgets_values": [
-        "一只活泼可爱的拉布拉多幼犬，拥有柔软顺滑的巧克力色被毛，水汪汪的大眼睛闪烁着好奇与兴奋，鼻子不停地嗅探着四周，耳朵随着它的动作轻轻抖动。它身处一片绿意盎然的夏日草地上，阳光透过稀疏的云层，斑驳地洒在起伏的草叶上，远处有几棵高大的树木投下墨绿色的阴影，微风拂过，带来青草的清新气息。小狗兴奋地扑向空中，用前爪抓住一个五彩斑斓的飞盘，身体在空中划出一道优美的弧线，然后用力向下摔落，接着快速转身，另一只爪子精准地接住飞盘，发出欢快的吠叫声。中景到近景切换，采用跟随镜头，平视角度拍摄，捕捉小狗跳跃的瞬间和它专注的神情，镜头时而轻微推近，强调它的表情，时而平稳跟随，展现它奔跑的动态。画面洋溢着无忧无虑的快乐和童真，充满活力与动感，采用明亮、饱和度高的写实风格，如同电影般生动。"
+        "A playful, fluffy golden retriever with bright, expressive brown eyes and a wagging tail, energetically frolics on a lush, green grassy field under a bright blue sky. The dog is caught mid-leap, its paws stretched out towards a vibrant red ball that is hovering just above the grass, as if about to catch it. In the background, there are tall, swaying green trees providing a serene natural setting. The sun casts soft, warm light on the scene, highlighting the dog's golden fur and creating a cheerful, joyful atmosphere. A few colorful wildflowers dot the grass around the dog, adding pops of color to the landscape. The overall image captures the essence of carefree fun and the beauty of a sunny day in nature."
       ]
     },
     {
       "id": 8,
       "type": "ShowText|pysssss",
       "pos": [
-        460,
-        250
+        330,
+        310
       ],
       "size": [
         340,
         500
       ],
       "flags": {},
-      "order": 5,
+      "order": 6,
       "mode": 0,
       "inputs": [
         {
           "name": "text",
           "type": "STRING",
-          "link": 21
+          "link": 37
         }
       ],
       "outputs": [
@@ -81,22 +81,22 @@
         "widget_ue_connectable": {}
       },
       "widgets_values": [
-        "一位穿着白色长袖上衣和黑色百褶裙的长发女孩，站在室内环境中，双手自然下垂，身体微微前倾，展现出自信的姿态。背景是一扇关闭的门和一张白色的桌子，整个场景显得简洁而温馨。"
+        "A young woman lounging on a bed, dressed in a light gray tank top and matching shorts, her hair tied back casually. She rests against a large plush teddy bear, exuding a relaxed and cozy atmosphere. Her legs are crossed, and she wears white socks, adding to the comfort of the scene. A bowl of fresh fruits sits nearby, along with some books and magazines, suggesting a leisurely afternoon spent reading and snacking. The room has a soft, warm lighting that enhances the serene and inviting ambiance."
       ]
     },
     {
       "id": 9,
       "type": "easy imageToBase64",
       "pos": [
-        -180,
-        620
+        -310,
+        680
       ],
       "size": [
         140,
         26
       ],
       "flags": {},
-      "order": 2,
+      "order": 3,
       "mode": 0,
       "inputs": [
         {
@@ -112,7 +112,7 @@
           "name": "STRING",
           "type": "STRING",
           "links": [
-            20
+            36
           ]
         }
       ],
@@ -128,8 +128,8 @@
       "id": 10,
       "type": "LoadImage",
       "pos": [
-        -240,
-        240
+        -370,
+        300
       ],
       "size": [
         270,
@@ -160,12 +160,70 @@
         "widget_ue_connectable": {}
       },
       "widgets_values": [
-        "091fc180160bfbe06eb57cdf0469b2a.png",
+        "c34bf72851a3fb33b66c46444efba3c.jpg",
         "image"
       ]
     },
     {
-      "id": 18,
+      "id": 31,
+      "type": "GLM_Vision_ImageToPrompt",
+      "pos": [
+        -80,
+        310
+      ],
+      "size": [
+        400,
+        286
+      ],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image_base64",
+          "type": "STRING",
+          "widget": {
+            "name": "image_base64"
+          },
+          "link": 36
+        }
+      ],
+      "outputs": [
+        {
+          "name": "GETPrompt",
+          "type": "STRING",
+          "links": [
+            37
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "ComfyUI-GLM4",
+        "ver": "87fa62adf4206ea7958ebcabe9ab750459087847",
+        "Node name for S&R": "GLM_Vision_ImageToPrompt",
+        "widget_ue_connectable": {}
+      },
+      "widgets_values": [
+        "Flux描述",
+        "",
+        "",
+        "glm-4v-flash",
+        "",
+        692102843978258,
+        "randomize",
+        "",
+        [
+          false,
+          true
+        ],
+        [
+          false,
+          true
+        ]
+      ]
+    },
+    {
+      "id": 32,
       "type": "GLM_Text_Chat",
       "pos": [
         -90,
@@ -176,7 +234,7 @@
         334
       ],
       "flags": {},
-      "order": 1,
+      "order": 2,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -184,25 +242,25 @@
           "name": "response_text",
           "type": "STRING",
           "links": [
-            17
+            38
           ]
         }
       ],
       "properties": {
         "cnr_id": "ComfyUI-GLM4",
-        "ver": "c4aad9273bb13a74c48526da0856bd0b3e104664",
+        "ver": "87fa62adf4206ea7958ebcabe9ab750459087847",
         "Node name for S&R": "GLM_Text_Chat",
         "widget_ue_connectable": {}
       },
       "widgets_values": [
-        "默认视频扩写提示",
+        "Flux扩写",
         "",
         "",
         "glm-4-flash-250414",
         0.9,
         0.7,
         1024,
-        16989113619993,
+        526268498119035,
         "randomize",
         "请扩写关于一只小狗在草地上玩耍的视频提示词。",
         [
@@ -216,62 +274,30 @@
       ]
     },
     {
-      "id": 20,
-      "type": "GLM_Vision_ImageToPrompt",
+      "id": 33,
+      "type": "MarkdownNote",
       "pos": [
-        50,
-        250
+        -490,
+        -200
       ],
       "size": [
-        400,
-        286
+        360,
+        390
       ],
       "flags": {},
-      "order": 4,
+      "order": 1,
       "mode": 0,
-      "inputs": [
-        {
-          "name": "image_base64",
-          "type": "STRING",
-          "widget": {
-            "name": "image_base64"
-          },
-          "link": 20
-        }
-      ],
-      "outputs": [
-        {
-          "name": "GETPrompt",
-          "type": "STRING",
-          "links": [
-            21
-          ]
-        }
-      ],
+      "inputs": [],
+      "outputs": [],
+      "title": "老何的AIGC研究室",
       "properties": {
-        "cnr_id": "ComfyUI-GLM4",
-        "ver": "c4aad9273bb13a74c48526da0856bd0b3e104664",
-        "Node name for S&R": "GLM_Vision_ImageToPrompt",
         "widget_ue_connectable": {}
       },
       "widgets_values": [
-        "视频提示词生成指南",
-        "",
-        "glm-4v-flash",
-        "",
-        1073397559378314,
-        "randomize",
-        "",
-        "",
-        [
-          false,
-          true
-        ],
-        [
-          false,
-          true
-        ]
-      ]
+        "# 💖 老何的AIGC研究室 💖\n\n---\n\n## 嘿！有AIGC方面的问题吗？找我就对啦！👇\n\n---\n\n### 🖥️ 搞不定远程环境？我来帮你部署！\n\n---\n\n### 🐞 遇到报错？别担心，我能帮你修复！\n\n---\n\n### 📦 想要专属整合包？没问题，为你定制！\n\n---\n\n### ❓ 有疑问？一对一专属答疑等你哦！\n\n---\n\n## 需要的话，快来联系我吧！ WeChat: hlsaigc\n\n---\n\n## **VIP 指南：** [《老何的AIGC研究室 Vip 指南》](https://www.yuque.com/helaoshi-qraaf/hls/outvy49mgv1f9qon?singleDoc#%20%E3%80%8A%E8%80%81%E4%BD%95%E7%9A%84AIGC%E7%A0%94%E7%A9%B6%E6%89%80%20Vip%20%E6%8C%87%E5%8D%97%E3%80%8B)"
+      ],
+      "color": "#c09430",
+      "bgcolor": "rgba(24,24,27,.9)"
     }
   ],
   "links": [
@@ -284,26 +310,26 @@
       "IMAGE"
     ],
     [
-      17,
-      18,
-      0,
-      7,
-      0,
-      "STRING"
-    ],
-    [
-      20,
+      36,
       9,
       0,
-      20,
+      31,
       0,
       "STRING"
     ],
     [
-      21,
-      20,
+      37,
+      31,
       0,
       8,
+      0,
+      "STRING"
+    ],
+    [
+      38,
+      32,
+      0,
+      7,
       0,
       "STRING"
     ]
@@ -313,8 +339,8 @@
       "id": 1,
       "title": "反推",
       "bounding": [
-        -250,
-        170,
+        -380,
+        230,
         1060,
         593.5999755859375
       ],
@@ -334,15 +360,28 @@
       "color": "#3f789e",
       "font_size": 24,
       "flags": {}
+    },
+    {
+      "id": 3,
+      "title": "老何的AIGC研究室",
+      "bounding": [
+        -500,
+        -270,
+        380,
+        473.6000061035156
+      ],
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {}
     }
   ],
   "config": {},
   "extra": {
     "ds": {
-      "scale": 0.7247295000000004,
+      "scale": 0.6588450000000007,
       "offset": [
-        1310.2388753321065,
-        370.0902219379781
+        1431.6243577776252,
+        445.7095371445483
       ]
     },
     "ue_links": [],
