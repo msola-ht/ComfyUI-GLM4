@@ -1,3 +1,5 @@
 {
-  "ZHIPUAI_API_KEY": "YOUR_ZHIPUAI_API_KEY_HERE"
+    "ZHIPUAI_API_KEY": "YOUR_ZHIPUAI_API_KEY_HERE",
+    "from_translate": "zh",
+    "to_translate": "en"
 }

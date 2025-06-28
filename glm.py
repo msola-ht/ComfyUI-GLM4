@@ -12,11 +12,19 @@ CONFIG_FILE_NAME = 'config.json'
 TEXT_PROMPTS_FILE_NAME = 'text_prompts.txt'
 IMAGE_PROMPTS_FILE_NAME = 'image_prompts.txt'
 
+# 支持的语言代码列表，用于翻译节点
+# 智谱AI的翻译能力通常是通用语言对，这里列出一些常见语言作为示例
+# 实际支持的语言可能需要查阅智谱AI官方文档
+SUPPORTED_TRANSLATION_LANGS = [
+    'zh', 'en',
+    # 更多语言可以根据智谱AI实际支持情况添加
+]
+
 # --- 辅助函数 ---
 
 def _log_info(message):
     """统一的日志输出函数"""
-    print(f"[GLM_Nodes] {message}")
+    print(f"[GLM_Nodes] 信息：{message}")
 
 def _log_warning(message):
     """统一的警告输出函数"""
@@ -34,7 +42,7 @@ def get_zhipuai_api_key():
     """
     env_api_key = os.getenv("ZHIPUAI_API_KEY")
     if env_api_key:
-        _log_info("使用环境变量 API Key。") # 精简
+        _log_info("使用环境变量 API Key。")
         return env_api_key
 
     config_path = os.path.join(CURRENT_DIR, CONFIG_FILE_NAME)
@@ -44,16 +52,16 @@ def get_zhipuai_api_key():
                 config = json.load(f)
             api_key = config.get("ZHIPUAI_API_KEY")
             if api_key:
-                _log_info(f"从 {CONFIG_FILE_NAME} 读取 API Key。") # 精简
+                _log_info(f"从 {CONFIG_FILE_NAME} 读取 API Key。")
                 return api_key
             else:
-                _log_warning(f"在 {CONFIG_FILE_NAME} 中未找到 ZHIPUAI_API_KEY。") # 精简
+                _log_warning(f"在 {CONFIG_FILE_NAME} 中未找到 ZHIPUAI_API_KEY。")
                 return ""
         else:
-            _log_warning(f"未找到 API Key 配置文件 {CONFIG_FILE_NAME}。") # 精简
+            _log_warning(f"未找到 API Key 配置文件 {CONFIG_FILE_NAME}。")
             return ""
     except json.JSONDecodeError:
-        _log_error(f"配置文件 {CONFIG_FILE_NAME} 格式不正确。") # 精简
+        _log_error(f"配置文件 {CONFIG_FILE_NAME} 格式不正确。")
         return ""
     except Exception as e:
         _log_error(f"读取配置文件时发生错误: {e}")
@@ -70,7 +78,7 @@ def load_prompts_from_txt(file_path, default_built_in_prompts):
     current_prompt_content = []
 
     if not os.path.exists(file_path):
-        _log_warning(f"提示词文件 '{os.path.basename(file_path)}' 不存在，使用内置默认提示词。") # 精简
+        _log_warning(f"提示词文件 '{os.path.basename(file_path)}' 不存在，使用内置默认提示词。")
         return default_built_in_prompts
 
     try:
@@ -97,15 +105,15 @@ def load_prompts_from_txt(file_path, default_built_in_prompts):
                 prompts[current_prompt_name] = "\n".join(current_prompt_content).strip()
 
         if not prompts:
-            _log_warning(f"提示词文件 '{os.path.basename(file_path)}' 内容为空或格式不正确，使用内置默认提示词。") # 精简
+            _log_warning(f"提示词文件 '{os.path.basename(file_path)}' 内容为空或格式不正确，使用内置默认提示词。")
             return default_built_in_prompts
 
-        _log_info(f"从 '{os.path.basename(file_path)}' 加载提示词成功。") # 精简
+        _log_info(f"从 '{os.path.basename(file_path)}' 加载提示词成功。")
         return prompts
 
     except Exception as e:
-        _log_error(f"解析提示词文件 '{os.path.basename(file_path)}' 失败: {e}。使用内置默认提示词。") # 精简
-        return default_built_in_prompts
+        _log_error(f"解析提示词文件 '{os.path.basename(file_path)}' 失败: {e}。使用内置默认提示词。")
+        return default_built_prompts
 
 
 # --- GLM文本对话节点 ---
@@ -179,13 +187,16 @@ class GLM_Text_Chat:
         """
         final_api_key = api_key.strip() or get_zhipuai_api_key()
         if not final_api_key:
-            return (_log_error("API Key 未提供。"),) # 精简
-        _log_info("初始化智谱AI客户端。") # 精简
+            _log_error("API Key 未提供。")
+            return ("API Key 未提供。",)
+
+        _log_info("初始化智谱AI客户端。")
 
         try:
             client = ZhipuAI(api_key=final_api_key)
         except Exception as e:
-            return (_log_error(f"客户端初始化失败: {e}"),) # 精简
+            _log_error(f"客户端初始化失败: {e}")
+            return (f"客户端初始化失败: {e}",)
 
         # --- 系统提示词确定优先级 ---
         final_system_prompt = ""
@@ -193,25 +204,26 @@ class GLM_Text_Chat:
 
         if system_prompt_override and system_prompt_override.strip():
             final_system_prompt = system_prompt_override.strip()
-            _log_info("使用 'system_prompt_override'。") # 精简
+            _log_info("使用 'system_prompt_override'。")
         elif text_system_prompt_preset in available_prompts:
             final_system_prompt = available_prompts[text_system_prompt_preset]
-            _log_info(f"使用预设提示词: '{text_system_prompt_preset}'。") # 精简
+            _log_info(f"使用预设提示词: '{text_system_prompt_preset}'。")
         else:
             if available_prompts:
                 final_system_prompt = list(available_prompts.values())[0]
-                _log_warning(f"预设 '{text_system_prompt_preset}' 未找到，使用第一个可用预设。") # 精简
+                _log_warning(f"预设 '{text_system_prompt_preset}' 未找到，使用第一个可用预设。")
             else:
                 final_system_prompt = list(self._BUILT_IN_TEXT_PROMPTS.values())[0]
-                _log_warning("无可用预设提示词，使用内置备用。") # 精简
+                _log_warning("无可用预设提示词，使用内置备用。")
 
 
         if not final_system_prompt:
-            return (_log_error("系统提示词不能为空。"),) # 精简
+            _log_error("系统提示词不能为空。")
+            return ("系统提示词不能为空。",)
 
         # 确保 final_system_prompt 确实是字符串
         if not isinstance(final_system_prompt, str):
-            _log_warning(f"系统提示词类型异常: {type(final_system_prompt)}。尝试转换为字符串。") # 精简
+            _log_warning(f"系统提示词类型异常: {type(final_system_prompt)}。尝试转换为字符串。")
             final_system_prompt = str(final_system_prompt)
 
         messages = [
@@ -221,13 +233,10 @@ class GLM_Text_Chat:
 
         # --- 种子逻辑 ---
         effective_seed = seed if seed != 0 else random.randint(0, 0xffffffffffffffff)
-        _log_info(f"内部种子: {effective_seed}。") # 精简
+        _log_info(f"内部种子: {effective_seed}。")
         random.seed(effective_seed) # 仅影响节点内部的随机性，如未来可能扩展的随机选择逻辑
 
-        _log_info(f"调用 GLM-4 ({model_name})...") # 精简
-        # _log_info(f"  系统提示词 (前100字): '{final_system_prompt[:100]}...'") # 移除，太长
-        # _log_info(f"  用户输入: '{text_input}'") # 移除，用户知道输入了什么
-        # _log_info(f"  参数: temp={temperature}, top_p={top_p}, max_tokens={max_tokens}") # 移除，一般不需要在每次运行时看到
+        _log_info(f"调用 GLM-4 ({model_name})...")
 
         try:
             response = client.chat.completions.create(
@@ -238,10 +247,10 @@ class GLM_Text_Chat:
                 max_tokens=max_tokens,
             )
             response_text = response.choices[0].message.content
-            _log_info("GLM-4 响应成功。") # 精简
+            _log_info("GLM-4 响应成功。")
             return (response_text,)
         except Exception as e:
-            error_message = f"GLM-4 API 调用失败: {e}" # 精简
+            error_message = f"GLM-4 API 调用失败: {e}"
             _log_error(error_message)
             return (error_message,)
 
@@ -322,23 +331,26 @@ class GLM_Vision_ImageToPrompt:
         """
         final_api_key = api_key.strip() or get_zhipuai_api_key()
         if not final_api_key:
-            return (_log_error("API Key 未提供。"),) # 精简
-        _log_info("初始化智谱AI客户端。") # 精简
+            _log_error("API Key 未提供。")
+            return ("API Key 未提供。",)
+        _log_info("初始化智谱AI客户端。")
 
         try:
             client = ZhipuAI(api_key=final_api_key)
         except Exception as e:
-            return (_log_error(f"客户端初始化失败: {e}"),) # 精简
+            _log_error(f"客户端初始化失败: {e}")
+            return (f"客户端初始化失败: {e}",)
 
         # --- 输入校验：图片URL和Base64图片至少提供一个 ---
         image_url_provided = bool(image_url and image_url.strip())
         image_base64_provided = bool(image_base64 and image_base64.strip())
 
         if not image_url_provided and not image_base64_provided:
-            return (_log_error("必须提供图片URL或Base64数据。"),) # 精简
+            _log_error("必须提供图片URL或Base64数据。")
+            return ("必须提供图片URL或Base64数据。",)
 
         if image_url_provided and image_base64_provided:
-            _log_warning("同时提供了URL和Base64，优先使用Base64。") # 精简
+            _log_warning("同时提供了URL和Base64，优先使用Base64。")
 
         # --- 识图提示词确定优先级 ---
         final_prompt_text = ""
@@ -346,25 +358,26 @@ class GLM_Vision_ImageToPrompt:
 
         if prompt_override and prompt_override.strip():
             final_prompt_text = prompt_override.strip()
-            _log_info("使用 'prompt_override'。") # 精简
+            _log_info("使用 'prompt_override'。")
         elif image_prompt_preset in available_prompts:
             final_prompt_text = available_prompts[image_prompt_preset]
-            _log_info(f"使用预设识图提示词: '{image_prompt_preset}'。") # 精简
+            _log_info(f"使用预设识图提示词: '{image_prompt_preset}'。")
         else:
             if available_prompts:
                 final_prompt_text = list(available_prompts.values())[0]
-                _log_warning(f"预设 '{image_prompt_preset}' 未找到，使用第一个可用预设。") # 精简
+                _log_warning(f"预设 '{image_prompt_preset}' 未找到，使用第一个可用预设。")
             else:
                 final_prompt_text = list(self._BUILT_IN_IMAGE_PROMPTS.values())[0]
-                _log_warning("无可用预设识图提示词，使用内置备用。") # 精简
+                _log_warning("无可用预设识图提示词，使用内置备用。")
 
 
         if not final_prompt_text:
-             return (_log_error("识图提示词不能为空。"),) # 精简
+            _log_error("识图提示词不能为空。")
+            return ("识图提示词不能为空。",)
 
         # 确保 final_prompt_text 确实是字符串
         if not isinstance(final_prompt_text, str):
-            _log_warning(f"识图提示词类型异常: {type(final_prompt_text)}。尝试转换为字符串。") # 精简
+            _log_warning(f"识图提示词类型异常: {type(final_prompt_text)}。尝试转换为字符串。")
             final_prompt_text = str(final_prompt_text)
 
         # --- 构建消息内容 ---
@@ -373,26 +386,26 @@ class GLM_Vision_ImageToPrompt:
         if image_base64_provided:
             if image_base64.startswith("data:image/"):
                 content_parts.append({"type": "image_url", "image_url": {"url": image_base64}})
-                _log_info("使用完整Base64 URI图片数据。") # 精简
+                _log_info("使用完整Base64 URI图片数据。")
             else:
-                _log_warning("Base64字符串缺少前缀，尝试添加默认JPEG前缀。") # 精简
+                _log_warning("Base64字符串缺少前缀，尝试添加默认JPEG前缀。")
                 try:
-                    base64.b64decode(image_base64.split(',')[-1]) # 尝试解码验证有效性
+                    # 尝试解码验证有效性，并添加常见前缀
+                    base64.b64decode(image_base64.split(',')[-1])
                     content_parts.append({"type": "image_url", "image_url": {"url": f"data:image/jpeg;base64,{image_base64}"}})
                 except Exception as decode_e:
-                    _log_error(f"Base64解码失败: {decode_e}") # 精简
+                    _log_error(f"Base64解码失败: {decode_e}")
                     return (_log_error("提供的Base64图片数据无效。"),)
         elif image_url_provided:
             content_parts.append({"type": "image_url", "image_url": {"url": image_url}})
-            _log_info(f"使用图片URL: {image_url}") # 精简
+            _log_info(f"使用图片URL: {image_url}")
 
         # --- 种子逻辑 (智谱AI GLM-4V API通常不支持直接的seed参数，此参数仅用于ComfyUI节点内部) ---
         effective_seed = seed if seed != 0 else random.randint(0, 0xffffffffffffffff)
-        _log_info(f"内部种子: {effective_seed}。") # 精简
+        _log_info(f"内部种子: {effective_seed}。")
         random.seed(effective_seed) # 仅影响节点内部的随机性
 
-        _log_info(f"调用 GLM-4V ({model_name})...") # 精简
-        # _log_info(f"  用户提示词 (前100字): '{final_prompt_text[:100]}...'") # 移除，太长
+        _log_info(f"调用 GLM-4V ({model_name})...")
     
         try:
             response = client.chat.completions.create(
@@ -400,10 +413,110 @@ class GLM_Vision_ImageToPrompt:
                 messages=[{"role": "user", "content": content_parts}]
             )
             response_content = str(response.choices[0].message.content)
-            _log_info("GLM-4V 响应成功。") # 精简
+            _log_info("GLM-4V 响应成功。")
             return (response_content,)
         except Exception as e:
-            error_message = f"GLM-4V API 调用失败: {e}" # 精简
+            error_message = f"GLM-4V API 调用失败: {e}"
+            _log_error(error_message)
+            return (error_message,)
+
+# --- GLM文本翻译节点 ---
+
+class GLM_Translation_Text:
+    """
+    一个用于在 ComfyUI 中调用智谱AI GLM模型进行文本翻译的节点。
+    """
+    CATEGORY = "GLM"
+    RETURN_TYPES = ("STRING",)
+    RETURN_NAMES = ("translated_text",)
+    FUNCTION = "glm_translate_function"
+
+    @classmethod
+    def INPUT_TYPES(s):
+        # 尝试从config.json加载默认翻译语言
+        config_path = os.path.join(CURRENT_DIR, CONFIG_FILE_NAME)
+        default_from_lang = "zh"
+        default_to_lang = "en"
+        try:
+            if os.path.exists(config_path):
+                with open(config_path, 'r', encoding='utf-8') as f:
+                    config = json.load(f)
+                default_from_lang = config.get("from_translate", default_from_lang)
+                default_to_lang = config.get("to_translate", default_to_lang)
+        except Exception as e:
+            _log_warning(f"加载翻译配置失败: {e}，使用默认语言。")
+
+        # 确保默认语言在SUPPORTED_TRANSLATION_LANGS中
+        if default_from_lang not in SUPPORTED_TRANSLATION_LANGS:
+            default_from_lang = "zh"
+        if default_to_lang not in SUPPORTED_TRANSLATION_LANGS:
+            default_to_lang = "en"
+
+        return {
+            "required": {
+                "text_input": ("STRING", {"multiline": True, "default": "你好，世界！", "placeholder": "请输入要翻译的文本"}),
+                "from_language": (SUPPORTED_TRANSLATION_LANGS, {"default": default_from_lang, "tooltip": "源语言"}),
+                "to_language": (SUPPORTED_TRANSLATION_LANGS, {"default": default_to_lang, "tooltip": "目标语言"}),
+                "api_key": ("STRING", {"default": "", "multiline": False, "placeholder": "可选：智谱AI API Key (留空则尝试从环境变量或config.json读取)"}),
+                "model_name": ("STRING", {"default": "glm-4-flash-250414", "placeholder": "请输入模型名称，如 glm-4-flash-250414"}),
+                "temperature": ("FLOAT", {"default": 0.1, "min": 0.0, "max": 1.0, "step": 0.01, "tooltip": "翻译任务建议较低的温度值以保持准确性"}),
+                "top_p": ("FLOAT", {"default": 0.7, "min": 0.0, "max": 1.0, "step": 0.01}),
+                "max_tokens": ("INT", {"default": 1024, "min": 1, "max": 4096}),
+                "seed": ("INT", {"default": 0, "min": 0, "max": 0xffffffffffffffff, "tooltip": "设置为0时，每次运行生成随机种子；设置为其他值时，使用固定种子。注意：此种子仅影响ComfyUI节点内部的随机数生成，不直接影响智谱AI模型的输出结果。"}),
+            }
+        }
+
+    def glm_translate_function(self, text_input, from_language, to_language, api_key, model_name, temperature, top_p, max_tokens, seed):
+        """
+        执行智谱AI GLM文本翻译功能。
+        """
+        final_api_key = api_key.strip() or get_zhipuai_api_key()
+        if not final_api_key:
+            _log_error("API Key 未提供。")
+            return ("API Key 未提供。",)
+
+        _log_info("初始化智谱AI客户端。")
+        try:
+            client = ZhipuAI(api_key=final_api_key)
+        except Exception as e:
+            _log_error(f"客户端初始化失败: {e}")
+            return (f"客户端初始化失败: {e}",)
+
+        if not text_input or not text_input.strip():
+            _log_warning("输入文本为空，不进行翻译。")
+            return ("",)
+
+        # 构建翻译系统提示词和用户输入
+        # 智谱AI本身可能没有专门的翻译API，通常通过指令LLM来完成
+        system_prompt = f"你是一个专业的翻译助手。请将用户提供的文本从{from_language}翻译成{to_language}。只输出翻译结果，不要包含任何解释性文字。"
+        user_message = text_input
+
+        messages = [
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": user_message}
+        ]
+
+        # --- 种子逻辑 ---
+        effective_seed = seed if seed != 0 else random.randint(0, 0xffffffffffffffff)
+        _log_info(f"内部种子: {effective_seed}。")
+        random.seed(effective_seed) # 仅影响节点内部的随机性
+
+        _log_info(f"调用 GLM ({model_name}) 进行翻译...")
+        _log_info(f"  从 '{from_language}' 翻译到 '{to_language}'。")
+
+        try:
+            response = client.chat.completions.create(
+                model=model_name,
+                messages=messages,
+                temperature=temperature,
+                top_p=top_p,
+                max_tokens=max_tokens,
+            )
+            translated_text = response.choices[0].message.content
+            _log_info("GLM 翻译响应成功。")
+            return (translated_text,)
+        except Exception as e:
+            error_message = f"GLM API 翻译调用失败: {e}"
             _log_error(error_message)
             return (error_message,)
 
@@ -411,10 +524,12 @@ class GLM_Vision_ImageToPrompt:
 NODE_CLASS_MAPPINGS = {
     "GLM_Text_Chat": GLM_Text_Chat,
     "GLM_Vision_ImageToPrompt": GLM_Vision_ImageToPrompt,
+    "GLM_Translation_Text": GLM_Translation_Text, # 新增翻译节点
 }
 
 # ComfyUI 节点显示名称映射
 NODE_DISPLAY_NAME_MAPPINGS = {
     "GLM_Text_Chat": "GLM文本对话",
     "GLM_Vision_ImageToPrompt": "GLM识图生成提示词",
+    "GLM_Translation_Text": "GLM文本翻译", # 新增翻译节点显示名称
 }
