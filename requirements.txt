@@ -1,1 +1,3 @@
 zhipuai
+Pillow
+numpy

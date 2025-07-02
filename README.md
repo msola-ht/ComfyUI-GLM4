@@ -2,15 +2,17 @@
 
 ------
 
-**ComfyUI-GLM4** 是一个 ComfyUI 自定义节点，让您可以在 ComfyUI 中直接使用智谱AI的 **GLM-4 大语言模型**，为您的图像生成或自动化流程提供智能文本支持。
+**ComfyUI-GLM4** 是一个 ComfyUI 自定义节点，让您可以在 ComfyUI 中直接使用智谱AI的 **GLM-4 大语言模型**，为您的图像生成或自动化流程提供智能文本支持。用AI写的
 
 6-20：从 https://github.com/heshengtao/comfyui_LLM_party 获取的FLUX提示词模版
 
 6-28：参考 https://github.com/AlekPet/ComfyUI_Custom_Nodes_AlekPet 新增了翻译节点，目前只有中英文
 
+7-2： 增加图像输入，并直接转换为Base64，不用外部接入转换节点
+
 ## 视频反推及扩写
 
-![ComfyUI-GLM4](/image/PixPin_2025-06-28_15-59-36.png)
+![ComfyUI-GLM4](/image/PixPin_2025-07-02_21-27-22.png)
 
 ## Flux 提示词
 

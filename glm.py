@@ -3,6 +3,9 @@ import json
 import base64
 import random
 from zhipuai import ZhipuAI
+from PIL import Image
+import numpy as np
+import io
 
 # --- 全局常量和配置 ---
 CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -113,8 +116,7 @@ def load_prompts_from_txt(file_path, default_built_in_prompts):
 
     except Exception as e:
         _log_error(f"解析提示词文件 '{os.path.basename(file_path)}' 失败: {e}。使用内置默认提示词。")
-        return default_built_prompts
-
+        return default_built_in_prompts # 修正这里，应该是 default_built_in_prompts
 
 # --- GLM文本对话节点 ---
 
@@ -251,7 +253,6 @@ class GLM_Text_Chat:
             return (response_text,)
         except Exception as e:
             error_message = f"GLM-4 API 调用失败: {e}"
-            _log_error(error_message)
             return (error_message,)
 
 # --- GLM识图生成提示词节点 ---
@@ -259,7 +260,7 @@ class GLM_Text_Chat:
 class GLM_Vision_ImageToPrompt:
     """
     一个用于在 ComfyUI 中调用智谱AI GLM-4V 模型，
-    根据图片 URL 或 Base64 编码的图片数据和文本提示生成图片描述提示词的节点。
+    根据图片 URL、Base64 编码的图片数据或直接的ComfyUI IMAGE对象生成图片描述提示词的节点。
     支持多个预设识图提示词（从特定格式的TXT文件加载），并有优先级管理。
     """
     CATEGORY = "GLM"
@@ -294,11 +295,6 @@ class GLM_Vision_ImageToPrompt:
                     "multiline": True,
                     "placeholder": "请输入用于描述图片的文本提示词 (最高优先级，留空则从预设加载)"
                 }),
-                "image_base64": ("STRING", {
-                    "multiline": True,
-                    "default": "",
-                    "placeholder": "请输入Base64编码的图片数据 (与URL二选一)"
-                }),
                 "model_name": ("STRING", {
                     "default": "glm-4v-flash",
                     "placeholder": "请输入模型名称，如 glm-4v-flash"
@@ -320,12 +316,18 @@ class GLM_Vision_ImageToPrompt:
             "optional": {
                 "image_url": ("STRING", {
                     "default": "",
-                    "placeholder": "请输入图片URL (与Base64二选一)"
+                    "placeholder": "请输入图片URL (与Base64/IMAGE三选一)"
                 }),
+                "image_base64": ("STRING", {
+                    "multiline": True,
+                    "default": "",
+                    "placeholder": "请输入Base64编码的图片数据 (与URL/IMAGE三选一)"
+                }),
+                "image_input": ("IMAGE", {"optional": True, "tooltip": "直接输入ComfyUI IMAGE对象 (与URL/Base64三选一)"}), # 新增IMAGE输入
             }
         }
 
-    def generate_prompt(self, api_key, prompt_override, model_name, seed, image_url="", image_base64="", image_prompt_preset=""):
+    def generate_prompt(self, api_key, prompt_override, model_name, seed, image_url="", image_base64="", image_prompt_preset="", image_input=None):
         """
         执行智谱AI GLM-4V 识图生成提示词功能。
         """
@@ -341,16 +343,52 @@ class GLM_Vision_ImageToPrompt:
             _log_error(f"客户端初始化失败: {e}")
             return (f"客户端初始化失败: {e}",)
 
-        # --- 输入校验：图片URL和Base64图片至少提供一个 ---
+        # --- 输入校验：图片URL、Base64图片或IMAGE对象至少提供一个 ---
         image_url_provided = bool(image_url and image_url.strip())
         image_base64_provided = bool(image_base64 and image_base64.strip())
+        image_input_provided = image_input is not None
 
-        if not image_url_provided and not image_base64_provided:
-            _log_error("必须提供图片URL或Base64数据。")
-            return ("必须提供图片URL或Base64数据。",)
+        if not (image_url_provided or image_base64_provided or image_input_provided):
+            _log_error("必须提供图片URL、Base64数据或IMAGE对象。")
+            return ("必须提供图片URL、Base64数据或IMAGE对象。",)
 
-        if image_url_provided and image_base64_provided:
-            _log_warning("同时提供了URL和Base64，优先使用Base64。")
+        # --- 处理图片输入优先级：IMAGE > Base64 > URL ---
+        final_image_data = None
+        if image_input_provided:
+            _log_info("检测到 IMAGE 对象输入，正在转换为 Base64。")
+            try:
+                # ComfyUI的IMAGE是PyTorch张量，范围[0,1]，形状[B, H, W, C]
+                # 转换为PIL Image，范围[0,255]，形状[H, W, C]
+                i = 255. * image_input.cpu().numpy()
+                img = Image.fromarray(np.clip(i, 0, 255).astype(np.uint8)[0]) # 取第一个batch的图片
+                
+                buffered = io.BytesIO()
+                img.save(buffered, format="PNG") # 通常PNG是无损且支持透明度
+                final_image_data = "data:image/png;base64," + base64.b64encode(buffered.getvalue()).decode('utf-8')
+                _log_info("IMAGE 对象成功转换为 Base64。")
+            except Exception as e:
+                _log_error(f"将 IMAGE 对象转换为 Base64 失败: {e}")
+                return (f"将 IMAGE 对象转换为 Base64 失败: {e}",)
+        elif image_base64_provided:
+            _log_info("检测到 Base64 字符串输入。")
+            if image_base64.startswith("data:image/"):
+                final_image_data = image_base64
+            else:
+                _log_warning("Base64字符串缺少前缀，尝试添加默认JPEG前缀。")
+                try:
+                    # 尝试解码验证有效性，并添加常见前缀
+                    base64.b64decode(image_base64.split(',')[-1])
+                    final_image_data = f"data:image/jpeg;base64,{image_base64}"
+                except Exception as decode_e:
+                    _log_error(f"Base64解码失败: {decode_e}")
+                    return ("提供的Base64图片数据无效。",)
+        elif image_url_provided:
+            _log_info(f"检测到图片URL输入: {image_url}")
+            final_image_data = image_url
+
+        if not final_image_data:
+            _log_error("未能获取有效的图片数据。")
+            return ("未能获取有效的图片数据。",)
 
         # --- 识图提示词确定优先级 ---
         final_prompt_text = ""
@@ -382,23 +420,8 @@ class GLM_Vision_ImageToPrompt:
 
         # --- 构建消息内容 ---
         content_parts = [{"type": "text", "text": final_prompt_text}]
+        content_parts.append({"type": "image_url", "image_url": {"url": final_image_data}})
 
-        if image_base64_provided:
-            if image_base64.startswith("data:image/"):
-                content_parts.append({"type": "image_url", "image_url": {"url": image_base64}})
-                _log_info("使用完整Base64 URI图片数据。")
-            else:
-                _log_warning("Base64字符串缺少前缀，尝试添加默认JPEG前缀。")
-                try:
-                    # 尝试解码验证有效性，并添加常见前缀
-                    base64.b64decode(image_base64.split(',')[-1])
-                    content_parts.append({"type": "image_url", "image_url": {"url": f"data:image/jpeg;base64,{image_base64}"}})
-                except Exception as decode_e:
-                    _log_error(f"Base64解码失败: {decode_e}")
-                    return (_log_error("提供的Base64图片数据无效。"),)
-        elif image_url_provided:
-            content_parts.append({"type": "image_url", "image_url": {"url": image_url}})
-            _log_info(f"使用图片URL: {image_url}")
 
         # --- 种子逻辑 (智谱AI GLM-4V API通常不支持直接的seed参数，此参数仅用于ComfyUI节点内部) ---
         effective_seed = seed if seed != 0 else random.randint(0, 0xffffffffffffffff)

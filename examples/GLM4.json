@@ -1,8 +1,8 @@
 {
   "id": "0c6226d6-57f9-4c9e-906a-be819ea4e643",
   "revision": 0,
-  "last_node_id": 33,
-  "last_link_id": 38,
+  "last_node_id": 41,
+  "last_link_id": 51,
   "nodes": [
     {
       "id": 7,
@@ -16,7 +16,7 @@
         320
       ],
       "flags": {},
-      "order": 4,
+      "order": 3,
       "mode": 0,
       "inputs": [
         {
@@ -31,7 +31,9 @@
           "name": "STRING",
           "shape": 6,
           "type": "STRING",
-          "links": null
+          "links": [
+            45
+          ]
         }
       ],
       "properties": {
@@ -41,7 +43,7 @@
         "widget_ue_connectable": {}
       },
       "widgets_values": [
-        "A playful, fluffy golden retriever with bright, expressive brown eyes and a wagging tail, energetically frolics on a lush, green grassy field under a bright blue sky. The dog is caught mid-leap, its paws stretched out towards a vibrant red ball that is hovering just above the grass, as if about to catch it. In the background, there are tall, swaying green trees providing a serene natural setting. The sun casts soft, warm light on the scene, highlighting the dog's golden fur and creating a cheerful, joyful atmosphere. A few colorful wildflowers dot the grass around the dog, adding pops of color to the landscape. The overall image captures the essence of carefree fun and the beauty of a sunny day in nature."
+        "一只毛茸茸的金毛幼犬，眼睛明亮而充满好奇，鼻子不停地嗅着空气中的味道，身上覆盖着浓密而柔软的金色长毛，在一片绿意盎然的广阔草地上自由奔跑。清晨的阳光透过稀疏的云层，洒在草地上，形成斑驳的光影，微风轻轻吹拂，草叶随风摇曳。小狗兴奋地追逐着一只色彩斑斓的蝴蝶，时而急停，时而猛扑，四肢在空中划出优美的弧线，溅起细小的草屑和泥土。中景，平视角度拍摄，镜头稳定地跟随小狗的移动，捕捉它灵活的身姿和专注的神情。画面洋溢着纯真、快乐和无忧无虑的氛围，色彩自然清新，如田园诗般的写实风格。"
       ]
     },
     {
@@ -62,7 +64,7 @@
         {
           "name": "text",
           "type": "STRING",
-          "link": 37
+          "link": 50
         }
       ],
       "outputs": [
@@ -71,7 +73,9 @@
           "name": "STRING",
           "shape": 6,
           "type": "STRING",
-          "links": null
+          "links": [
+            48
+          ]
         }
       ],
       "properties": {
@@ -81,48 +85,8 @@
         "widget_ue_connectable": {}
       },
       "widgets_values": [
-        "A young woman lounging on a bed, dressed in a light gray tank top and matching shorts, her hair tied back casually. She rests against a large plush teddy bear, exuding a relaxed and cozy atmosphere. Her legs are crossed, and she wears white socks, adding to the comfort of the scene. A bowl of fresh fruits sits nearby, along with some books and magazines, suggesting a leisurely afternoon spent reading and snacking. The room has a soft, warm lighting that enhances the serene and inviting ambiance."
+        "一位穿着浅色吊带裙的长发女孩，坐在柔软的床上，周围有毛绒玩具和水果。她轻轻摆弄着手中的物品，背景中的书页翻动，营造出温馨舒适的氛围。镜头采用近景，略微俯视的角度，随着她的动作微微摇动，整体感觉轻松愉快，充满生活气息。"
       ]
-    },
-    {
-      "id": 9,
-      "type": "easy imageToBase64",
-      "pos": [
-        -310,
-        680
-      ],
-      "size": [
-        140,
-        26
-      ],
-      "flags": {},
-      "order": 3,
-      "mode": 0,
-      "inputs": [
-        {
-          "label": "图像",
-          "name": "image",
-          "type": "IMAGE",
-          "link": 5
-        }
-      ],
-      "outputs": [
-        {
-          "label": "字符串",
-          "name": "STRING",
-          "type": "STRING",
-          "links": [
-            36
-          ]
-        }
-      ],
-      "properties": {
-        "cnr_id": "comfyui-easy-use",
-        "ver": "de92038f88317699f314be85e5c7af84f1ab9c3a",
-        "Node name for S&R": "easy imageToBase64",
-        "widget_ue_connectable": {}
-      },
-      "widgets_values": []
     },
     {
       "id": 10,
@@ -136,7 +100,7 @@
         314
       ],
       "flags": {},
-      "order": 0,
+      "order": 2,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -144,7 +108,7 @@
           "name": "IMAGE",
           "type": "IMAGE",
           "links": [
-            5
+            51
           ]
         },
         {
@@ -165,64 +129,6 @@
       ]
     },
     {
-      "id": 31,
-      "type": "GLM_Vision_ImageToPrompt",
-      "pos": [
-        -80,
-        310
-      ],
-      "size": [
-        400,
-        286
-      ],
-      "flags": {},
-      "order": 5,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "image_base64",
-          "type": "STRING",
-          "widget": {
-            "name": "image_base64"
-          },
-          "link": 36
-        }
-      ],
-      "outputs": [
-        {
-          "name": "GETPrompt",
-          "type": "STRING",
-          "links": [
-            37
-          ]
-        }
-      ],
-      "properties": {
-        "cnr_id": "ComfyUI-GLM4",
-        "ver": "87fa62adf4206ea7958ebcabe9ab750459087847",
-        "Node name for S&R": "GLM_Vision_ImageToPrompt",
-        "widget_ue_connectable": {}
-      },
-      "widgets_values": [
-        "Flux描述",
-        "",
-        "",
-        "glm-4v-flash",
-        "",
-        692102843978258,
-        "randomize",
-        "",
-        [
-          false,
-          true
-        ],
-        [
-          false,
-          true
-        ]
-      ]
-    },
-    {
       "id": 32,
       "type": "GLM_Text_Chat",
       "pos": [
@@ -234,7 +140,7 @@
         334
       ],
       "flags": {},
-      "order": 2,
+      "order": 1,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -253,15 +159,15 @@
         "widget_ue_connectable": {}
       },
       "widgets_values": [
-        "Flux扩写",
+        "视频扩写",
         "",
         "",
         "glm-4-flash-250414",
         0.9,
         0.7,
         1024,
-        526268498119035,
-        "randomize",
+        370873282601757,
+        "fixed",
         "请扩写关于一只小狗在草地上玩耍的视频提示词。",
         [
           false,
@@ -285,7 +191,7 @@
         390
       ],
       "flags": {},
-      "order": 1,
+      "order": 0,
       "mode": 0,
       "inputs": [],
       "outputs": [],
@@ -298,33 +204,257 @@
       ],
       "color": "#c09430",
       "bgcolor": "rgba(24,24,27,.9)"
+    },
+    {
+      "id": 34,
+      "type": "ShowText|pysssss",
+      "pos": [
+        1225,
+        -180
+      ],
+      "size": [
+        250,
+        280
+      ],
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "text",
+          "type": "STRING",
+          "link": 46
+        }
+      ],
+      "outputs": [
+        {
+          "label": "字符串",
+          "name": "STRING",
+          "shape": 6,
+          "type": "STRING",
+          "links": null
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-custom-scripts",
+        "ver": "aac13aa7ce35b07d43633c3bbe654a38c00d74f5",
+        "Node name for S&R": "ShowText|pysssss",
+        "widget_ue_connectable": {}
+      },
+      "widgets_values": [
+        "A fluffy golden retriever puppy with bright and curious eyes, its nose constantly sniffing the air, covered in dense and soft golden long hair, running freely on a vast, lush green meadow. The morning sunlight filters through the sparse clouds, casting dappled shadows on the grass, as a gentle breeze sways the grass leaves. The excited puppy chases a colorful butterfly, sometimes stopping abruptly, sometimes lunging fiercely, its limbs tracing graceful arcs in the air, kicking up tiny grass clippings and dust. Mid-shot, shot from a level eye perspective, the camera steadily follows the puppy's movement, capturing its agile posture and focused expression. The scene exudes innocence, joy, and carefree atmosphere, with natural and fresh colors, in a realistic style reminiscent of pastoral poetry."
+      ]
+    },
+    {
+      "id": 38,
+      "type": "GLM_Translation_Text",
+      "pos": [
+        725,
+        -190
+      ],
+      "size": [
+        400,
+        304
+      ],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "text_input",
+          "type": "STRING",
+          "widget": {
+            "name": "text_input"
+          },
+          "link": 45
+        }
+      ],
+      "outputs": [
+        {
+          "name": "translated_text",
+          "type": "STRING",
+          "links": [
+            46
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "ComfyUI-GLM4",
+        "ver": "6b4bfe08d67f03e95f6864bfa42cfd647dbc84ba",
+        "Node name for S&R": "GLM_Translation_Text",
+        "widget_ue_connectable": {}
+      },
+      "widgets_values": [
+        "你好，世界！",
+        "zh",
+        "en",
+        "",
+        "glm-4-flash-250414",
+        0.1,
+        0.7,
+        1024,
+        309738338081596,
+        "fixed",
+        [
+          false,
+          true
+        ]
+      ]
+    },
+    {
+      "id": 39,
+      "type": "ShowText|pysssss",
+      "pos": [
+        1225,
+        320
+      ],
+      "size": [
+        250,
+        280
+      ],
+      "flags": {},
+      "order": 9,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "text",
+          "type": "STRING",
+          "link": 47
+        }
+      ],
+      "outputs": [
+        {
+          "label": "字符串",
+          "name": "STRING",
+          "shape": 6,
+          "type": "STRING",
+          "links": null
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-custom-scripts",
+        "ver": "aac13aa7ce35b07d43633c3bbe654a38c00d74f5",
+        "Node name for S&R": "ShowText|pysssss",
+        "widget_ue_connectable": {}
+      },
+      "widgets_values": [
+        "一位穿着浅色吊带裙的长发女孩，坐在柔软的床上，周围有毛绒玩具和水果。她轻轻摆弄着手中的物品，背景中的书页翻动，营造出温馨舒适的氛围。镜头采用近景，略微俯视的角度，随着她的动作微微摇动，整体感觉轻松愉快，充满生活气息。"
+      ]
+    },
+    {
+      "id": 40,
+      "type": "GLM_Translation_Text",
+      "pos": [
+        725,
+        310
+      ],
+      "size": [
+        400,
+        304
+      ],
+      "flags": {},
+      "order": 8,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "text_input",
+          "type": "STRING",
+          "widget": {
+            "name": "text_input"
+          },
+          "link": 48
+        }
+      ],
+      "outputs": [
+        {
+          "name": "translated_text",
+          "type": "STRING",
+          "links": [
+            47
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "ComfyUI-GLM4",
+        "ver": "6b4bfe08d67f03e95f6864bfa42cfd647dbc84ba",
+        "Node name for S&R": "GLM_Translation_Text",
+        "widget_ue_connectable": {}
+      },
+      "widgets_values": [
+        "你好，世界！",
+        "en",
+        "zh",
+        "",
+        "glm-4-flash-250414",
+        0.1,
+        0.7,
+        1024,
+        573484523485633,
+        "fixed",
+        [
+          false,
+          true
+        ]
+      ]
+    },
+    {
+      "id": 41,
+      "type": "GLM_Vision_ImageToPrompt",
+      "pos": [
+        -80,
+        310
+      ],
+      "size": [
+        400,
+        286
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image_input",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": 51
+        }
+      ],
+      "outputs": [
+        {
+          "name": "GETPrompt",
+          "type": "STRING",
+          "links": [
+            50
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "ComfyUI-GLM4",
+        "ver": "a3747a275a2f0d2753146be93209d2842d4d08a7",
+        "widget_ue_connectable": {},
+        "Node name for S&R": "GLM_Vision_ImageToPrompt"
+      },
+      "widgets_values": [
+        "视频描述",
+        "",
+        "glm-4v-flash",
+        "",
+        675006034978698,
+        "randomize",
+        "",
+        "",
+        [
+          false,
+          true
+        ],
+        [
+          false,
+          true
+        ]
+      ]
     }
   ],
   "links": [
-    [
-      5,
-      10,
-      0,
-      9,
-      0,
-      "IMAGE"
-    ],
-    [
-      36,
-      9,
-      0,
-      31,
-      0,
-      "STRING"
-    ],
-    [
-      37,
-      31,
-      0,
-      8,
-      0,
-      "STRING"
-    ],
     [
       38,
       32,
@@ -332,6 +462,54 @@
       7,
       0,
       "STRING"
+    ],
+    [
+      45,
+      7,
+      0,
+      38,
+      0,
+      "STRING"
+    ],
+    [
+      46,
+      38,
+      0,
+      34,
+      0,
+      "STRING"
+    ],
+    [
+      47,
+      40,
+      0,
+      39,
+      0,
+      "STRING"
+    ],
+    [
+      48,
+      8,
+      0,
+      40,
+      0,
+      "STRING"
+    ],
+    [
+      50,
+      41,
+      0,
+      8,
+      0,
+      "STRING"
+    ],
+    [
+      51,
+      10,
+      0,
+      41,
+      0,
+      "IMAGE"
     ]
   ],
   "groups": [
@@ -373,20 +551,46 @@
       "color": "#3f789e",
       "font_size": 24,
       "flags": {}
+    },
+    {
+      "id": 4,
+      "title": "翻译",
+      "bounding": [
+        720,
+        -260,
+        770,
+        887.5999755859375
+      ],
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 5,
+      "title": "老何的AIGC研究室 GLM4",
+      "bounding": [
+        -110,
+        -520,
+        1400,
+        160
+      ],
+      "color": "#b58b2a",
+      "font_size": 120,
+      "flags": {}
     }
   ],
   "config": {},
   "extra": {
     "ds": {
-      "scale": 0.6588450000000007,
+      "scale": 0.6588450000000009,
       "offset": [
-        1431.6243577776252,
-        445.7095371445483
+        1232.158329467638,
+        647.6900267325493
       ]
     },
     "ue_links": [],
     "links_added_by_ue": [],
-    "frontendVersion": "1.22.2",
+    "frontendVersion": "1.23.4",
     "VHS_latentpreview": false,
     "VHS_latentpreviewrate": 0,
     "VHS_MetadataImage": true,
