@@ -1,7 +1,7 @@
 [project]
 name = "ComfyUI-GLM4"
 description = "ComfyUI GLM Nodes: Seamlessly integrate ZhipuAI GLM models into ComfyUI for enhanced text generation and image-to-prompt capabilities. Features include advanced text chat (video prompt expansion) and GLM-4V powered image description."
-version = "1.0.4"
+version = "1.0.5"
 license = {file = "LICENSE"}
 dependencies = ["zhipuai"]
 
