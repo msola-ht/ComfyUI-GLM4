@@ -111,7 +111,7 @@ def load_prompts_from_txt(file_path, default_built_in_prompts):
             _log_warning(f"提示词文件 '{os.path.basename(file_path)}' 内容为空或格式不正确，使用内置默认提示词。")
             return default_built_in_prompts
 
-        _log_info(f"从 '{os.path.basename(file_path)}' 加载提示词成功。")
+        #_log_info(f"从 '{os.path.basename(file_path)}' 加载提示词成功。")
         return prompts
 
     except Exception as e:
